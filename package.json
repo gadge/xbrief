@@ -1,13 +1,13 @@
 {
   "name": "xbrief",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple console debug tool.",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
     "prepublish": "npm run build",
     "publish": "npm publish",
-    "test": "node test/index.js -r babel-register"
+    "test": "node test/test-main.js -r babel-register"
   },
   "dependencies": {},
   "devDependencies": {
