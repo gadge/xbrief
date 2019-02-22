@@ -1,4 +1,4 @@
-## Test es6 modules in nodejs
+## xbrief
 
 <p align="center">
   <a href="https://npmcharts.com/compare/xbrief?minimal=true"><img src="https://img.shields.io/npm/dm/xbrief.svg" alt="Downloads"></a>
@@ -9,6 +9,13 @@
 ## Usage
 
 A simple console debug tool.
+
+### inferFormat()
+inferFormat([]) // "[object Array]"
+inferFormat({}) // "[object Object]"
+
+### wL()
+"anything".wL() for console.log("anything") 
 
 ## License
 
