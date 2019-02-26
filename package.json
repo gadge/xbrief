@@ -1,22 +1,28 @@
 {
   "name": "xbrief",
-  "version": "0.0.5",
-  "description": "A simple console debug tool.",
-  "main": "dist/main.js",
+  "version": "0.0.7",
+  "description": "A light and simple console debug tool.",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "webpack --mode development",
     "build-babel": "babel src -d lib",
     "build-webpack": "webpack --mode production",
-    "prepare": "npm run build-webpack",
+    "build-rollup": "rollup -c",
+    "prepare": "npm run build-rollup",
     "publish": "npm publish",
-    "test": "node test/test-main.js -r babel-register"
+    "test": "node test/test-main.js -r @babel/register"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "babel-loader": "7.1.5",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-stage-2": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-transform-commonjs": "^1.1.4",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
     "axios": "^0.18.0"
