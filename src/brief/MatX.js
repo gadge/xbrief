@@ -1,7 +1,7 @@
 import { rn } from '../misc/clay'
-import { Typ } from '..'
+import { Typ } from '../typ/Typ'
 import { Preci } from '../misc/Preci'
-import { VecX } from '..'
+import { VecX } from '../brief/VecX'
 
 class MatX {
   /**

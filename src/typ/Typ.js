@@ -18,7 +18,7 @@
 //   }
 // };
 
-import { deco } from '..'
+import { deco } from '../brief/deco'
 
 const rxObj = /^\[object (.*)]$/
 

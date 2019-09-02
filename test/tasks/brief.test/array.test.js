@@ -1,5 +1,4 @@
-import { Str } from '../../../src'
-import { VecX } from '../../../src'
+import { Str, VecX } from '../../../dist/xbrief.esm'
 import { GP } from 'elprimero'
 
 const superlativeTrees = {
@@ -48,7 +47,7 @@ const paramSet = [
   }
 ]
 
-export class ArrayTest {
+class ArrayTest {
   static determineArray () {
     const candidates = [
       null,
@@ -91,3 +90,10 @@ export class ArrayTest {
     }
   }
 }
+
+test('ArrayTest.vBriefTest', () => {
+  ArrayTest.vBriefTest()
+  // expect(sum(1, 2)).toBe(3);
+})
+
+export { ArrayTest }
