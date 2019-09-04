@@ -1,5 +1,6 @@
 import { boxoffice } from '../../asset/boxoffice.190227.json.rows'
 import { MatX, Str } from '../../../src'
+import { ArrayTest } from './array.test'
 // import { GP, Chrono } from 'elprimero'
 
 const matrixSet = {
@@ -77,6 +78,11 @@ const paramSet = {
     },
   }
 }
+
+test('MatrixTest.xBriefTest', () => {
+  MatrixTest.xBriefTest()
+  // expect(sum(1, 2)).toBe(3);
+})
 
 export class MatrixTest {
   static xBriefTest () {

@@ -1,8 +1,9 @@
 {
   "name": "xbrief",
-  "version": "0.1.16",
+  "version": "0.1.20",
   "description": "A light and simple console debug tool.",
   "main": "dist/xbrief.cjs.js",
+  "browser": "dist/xbrief.umd.js",
   "module": "dist/xbrief.esm.js",
   "files": [
     "dist"
