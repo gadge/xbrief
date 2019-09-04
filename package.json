@@ -4,7 +4,6 @@
   "description": "A light and simple console debug tool.",
   "main": "dist/xbrief.cjs.js",
   "module": "dist/xbrief.esm.js",
-  "browser": "dist/xbrief.umd.js",
   "files": [
     "dist"
   ],
