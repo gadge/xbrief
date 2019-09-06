@@ -1,4 +1,4 @@
-import { deco, Str, VecX } from '../../../src'
+import { deco, StrX, VecX } from '../../../src'
 import { GP } from 'elprimero'
 
 export class RegexTest {
@@ -18,7 +18,7 @@ export class RegexTest {
       GP.now().tag('match').tag(VecX.vBrief(matches || [])).wL()
       let splits = sentence.split(regExp)
       GP.now().tag('split').tag(VecX.vBrief(splits || [])).wL()
-      Str.wL()
+      StrX.wL()
     }
 
     let searchBrackets = (tx) => {
@@ -63,9 +63,9 @@ export class RegexTest {
       for (let [, sentence] of sentences.entries()) {
         // `  ${i}`.tag(sentence).wL()
         try {
-          let jalike = Str.py2jv(sentence)
+          let jalike = StrX.py2jv(sentence)
           // '    py2jv'.tag(i).tag(jalike).wL()
-          let pylike = Str.jv2py(jalike, '_')
+          let pylike = StrX.jv2py(jalike, '_')
           // '    jv2py'.tag(i).wL()
           pylike.wL()
         } catch (e) {

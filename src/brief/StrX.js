@@ -1,12 +1,11 @@
-import { rn, tb } from '../misc/clay'
-import { deco } from './deco'
+import { rn, tb } from '../utils/clay'
 
 class StrReg {}
 
 StrReg.jv2py = /[A-Z]+|[0-9]+/g
 StrReg.py2jv = /[A-Za-z\d]+/g
 
-class Str {
+class StrX {
 
   /**
    * Java-style expression -> Pythonic expression
@@ -40,7 +39,7 @@ class Str {
   }
 
   static tag (label, item) {
-    const i = Str.indexOfFirstNonTab(label)
+    const i = StrX.indexOfFirstNonTab(label)
     let [key, text] = [
       label.endsWith(')')
         ? label
@@ -50,7 +49,7 @@ class Str {
     if (text.includes('\n')) {
       const t = ' '.repeat(i)
       text = (text.endsWith('}') || text.endsWith(']')) && !text.endsWith(']]')
-        ? Str.afterFirstNonTab(text.split(rn).map(x => t + x).join(rn))
+        ? StrX.afterFirstNonTab(text.split(rn).map(x => t + x).join(rn))
         : ['', ...text.split(rn).map(x => t + tb + x), t].join(rn)
     }
     return `${key} (${text})`
@@ -133,49 +132,10 @@ class Str {
   }
 
   static afterFirstNonTab (tx) {
-    return tx.substring(Str.indexOfFirstNonTab(tx))
+    return tx.substring(StrX.indexOfFirstNonTab(tx))
   }
 }
-
-String.prototype.wL = function () {
-  console.log(this)
-}
-
-String.prototype.tag = function (val) {
-  return Str.tag(this, val)
-}
-
-String.prototype.deco = function (val) {
-  return Str.tag(this, deco(val))
-}
-
-Number.prototype.tag = function (val) {
-  return Str.tag(this.toString(), val)
-}
-
-String.prototype.etch = function (item) {
-  const raw = typeof item
-  if (raw === 'object') {
-    switch (true) {
-      case (item instanceof Array):
-        this.tag(item.vBrief()).wL()
-        break
-      case (item instanceof Map):
-        this.tag(item.vBrief()).wL()
-        break
-      case (item instanceof Set):
-        this.tag(item.toArray().vBrief()).wL()
-        break
-      default:
-        this.tag(item).wL()
-    }
-  } else {
-    this.tag(item).wL()
-  }
-}
-
-// let emb = item => `"${item}"`
 
 export {
-  Str
+  StrX
 }

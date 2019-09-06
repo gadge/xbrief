@@ -67,19 +67,20 @@ class Typ {
   }
 
   static inferObject (it) {
-    const str = Object.prototype.toString.call(it)
-    return str.match(rxObj)[1].toLowerCase()
+    const [, info] = Object.prototype.toString.call(it).match(rxObj)
+    return info.toLowerCase()
+    // return str.match(rxObj)[1].toLowerCase()
   }
 
   static check (x) {
-    const info2 = {
+    const info = {
       toString: `${x}`,
       prototypeCall: Object.prototype.toString.call(x),
       notUndefined: x !== undefined,
       type: Typ.inferType(x),
       '!!': !!x
     }
-    return deco(info2)
+    return deco(info)
   }
 }
 

@@ -1,5 +1,5 @@
-import { rn, aeu } from '../misc/clay'
-import { Preci } from '../misc/Preci'
+import { rn, aeu } from '../utils/clay'
+import { Preci } from '../utils/Preci'
 
 class VecX {
 
@@ -19,9 +19,13 @@ class VecX {
                    tail
                  } = {}
   ) {
-    const preci = Preci.fromArr(arr, head, tail).map(abstract).stringify()
+    const preci = Preci.fromArr(arr, head, tail)
+      .map(abstract)
+      .stringify()
     const elements = preci.toList('...')
-    return elements.length > 0 ? elements.join(delimiter) : aeu
+    return elements.length > 0
+      ? elements.join(delimiter)
+      : aeu
   }
 
   /**
@@ -38,12 +42,16 @@ class VecX {
                    tail
                  } = {}
   ) {
-    const preci = Preci.fromArr(arr, head, tail).map(abstract).stringify()
+    const preci = Preci.fromArr(arr, head, tail)
+      .map(abstract)
+      .stringify()
     const elements = preci
       .jectHead(VecX.tagsIndexed)
       .jectTail(ar => VecX.tagsIndexed(ar, arr.length - tail))
       .toList('...')
-    return elements.length > 0 ? elements.join(rn) : aeu
+    return elements.length > 0
+      ? elements.join(rn)
+      : aeu
   }
 
   /**
@@ -93,14 +101,6 @@ class VecX {
       (x, i) => `[${(i + startIndex).toString().padStart(maxIdxLen)}] ${x}`
     )
   }
-}
-
-Array.prototype.hBrief = function ({ delimiter = ', ', abstract, head, tail } = {}) {
-  return VecX.hBrief(this, { delimiter, abstract, head, tail })
-}
-
-Array.prototype.vBrief = function ({ abstract, head, tail } = {}) {
-  return VecX.vBrief(this, { abstract, head, tail })
 }
 
 export {

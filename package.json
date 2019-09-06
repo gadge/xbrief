@@ -1,10 +1,10 @@
 {
   "name": "xbrief",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "A light and simple console debug tool.",
   "main": "dist/xbrief.cjs.js",
-  "browser": "dist/xbrief.umd.js",
   "module": "dist/xbrief.esm.js",
+  "browser": "dist/xbrief.umd.js",
   "files": [
     "dist"
   ],
@@ -24,6 +24,9 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@babel/plugin-proposal-pipeline-operator": "^7.5.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
     "elprimero": "^0.0.5",

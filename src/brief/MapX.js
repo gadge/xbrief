@@ -1,6 +1,7 @@
-import { rn, aeu } from '../misc/clay'
+import { rn, aeu } from '../utils/clay'
+import { Preci } from '../utils/Preci'
 import { EntX } from './EntX'
-import { Preci } from '../misc/Preci'
+import { VecX } from './VecX'
 
 class MapX {
   /**
@@ -20,13 +21,17 @@ class MapX {
                    tail = 0
                  } = {}
   ) {
-    const realAbstract = abstract ? ([k, v]) => [k, abstract(v)] : null
+    const textAbstract = abstract
+      ? ([k, v]) => [`${k}`, `${abstract(v)}`]
+      : ([k, v]) => [`${k}`, `${v}`]
     const preci = Preci
       .fromArr([...dict.entries()], head, tail)
-      .map(realAbstract)
-      .map(([k, v]) => [`${k}`, `${v}`])
-    const elements = preci.map(EntX.simpleBrief).toList('...')
-    return elements.length > 0 ? elements.join(delimiter) : aeu
+      .map(textAbstract)
+    const elements = preci.map(EntX.simpleBrief)
+      .toList('...')
+    return elements.length > 0
+      ? elements.join(delimiter)
+      : aeu
   }
 
   /***
@@ -38,27 +43,20 @@ class MapX {
    * @returns {string}
    */
   static vBrief (dict, { abstract, head, tail } = {}) {
-    const actualAbstract = !!abstract
+    const textAbstract = !!abstract
       ? ([k, v]) => [`${k}`, `${abstract(v)}`]
       : ([k, v]) => [`${k}`, `${v}`]
     const preci = Preci
       .fromArr([...dict.entries()], head, tail)
-      .map(actualAbstract)
-    const l = Math.max(...preci.map(([k]) => k.length)
-      .toList())
+      .map(textAbstract)
+    const pad = VecX.maxLength(preci.toList().map(([k]) => k))
     const elements = preci
-      .map(it => EntX.briefPadded(it, l))
-      .toList('...'.padStart(l))
-    return elements.length > 0 ? elements.join(rn) : aeu
+      .map(it => EntX.briefPadded(it, pad))
+      .toList('...'.padStart(pad))
+    return elements.length > 0
+      ? elements.join(rn)
+      : aeu
   }
-}
-
-Map.prototype.hBrief = function ({ delimiter = ', ', abstract, head = 0, tail = 0 } = {}) {
-  return MapX.hBrief(this, { delimiter, abstract, head, tail })
-}
-
-Map.prototype.vBrief = function ({ abstract, head = 0, tail = 0 } = {}) {
-  return MapX.vBrief(this, { abstract, head, tail })
 }
 
 export {

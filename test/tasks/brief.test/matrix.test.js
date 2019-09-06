@@ -1,6 +1,5 @@
 import { boxoffice } from '../../asset/boxoffice.190227.json.rows'
-import { MatX, Str } from '../../../src'
-import { ArrayTest } from './array.test'
+import { MatX, StrX } from '../../../src'
 // import { GP, Chrono } from 'elprimero'
 
 const matrixSet = {
@@ -17,7 +16,7 @@ const matrixSet = {
 
 const paramSet = {
   simple1: {
-    abstract: (x) => Str.py2jv(`${x}`),
+    abstract: (x) => StrX.py2jv(`${x}`),
     rows: {
       head: 2,
       tail: 1

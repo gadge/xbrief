@@ -1,24 +1,30 @@
+import { tb, rn } from '../utils/clay'
+
 let deco = function (obj) {
   return deNode(obj, 0)
 }
 
-const tab = '  '
-
-let deNode = function (node, l = 0) {
-  let [nt, concat] = ['\r\n' + tab.repeat(l), '']
+/**
+ *
+ * @param {*} node
+ * @param {number} l
+ * @return {string}
+ */
+function deNode (node, l = 0) {
+  let [r, concat] = [rn + tb.repeat(l), '']
   if (typeof node === 'object') {
     switch (true) {
       case (node instanceof Array) :
-        concat = deList(node, l, nt)
+        concat = deList(node, l, r)
         return `[${concat}]`
       case (node instanceof Map) :
-        concat = deKvps([...node.entries()], l, nt)
+        concat = deKvps([...node.entries()], l, r)
         return `[${concat}]`
       case (node instanceof Set) :
-        concat = deList([...node], l, nt)
+        concat = deList([...node], l, r)
         return `set:[${concat}]`
       case (node instanceof Object):
-        concat = deKvps(Object.entries(node), l, nt)
+        concat = deKvps(Object.entries(node), l, r)
         return `{${concat}}`
       default:
         return `${node}`
@@ -28,20 +34,20 @@ let deNode = function (node, l = 0) {
   }
 }
 
-let deKvps = function (kvps, l, nt) {
+let deKvps = function (kvps, l, rn) {
   // const max = Stat.maxBy(kvps, it => it[0].toString().length)
-  const max = Math.max(...kvps.map(it => it[0].toString().length))
+  const max = Math.max(...kvps.map(([k]) => k.toString().length))
   const points = kvps
     .map(([k, v]) => `${k.toString().padEnd(max, ' ')}: ${deNode(v, l + 1)}`)
   return points.length > 1
-    ? `${nt}  ${points.join(`,${nt + tab}`)}${nt}`
+    ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
     : points.join(',')
 }
 
-let deList = function (arr, l, nt) {
+let deList = function (arr, l, rn) {
   const points = arr.map(it => deNode(it, l + 1))
-  return points.reduce((a, b) => a + b, 0) > 36
-    ? `${nt}  ${points.join(`,${nt + tab}`)}${nt}`
+  return points.reduce((a, b) => a + b, 0).toString().length > 36
+    ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
     : points.join(',')
 }
 

@@ -1,6 +1,6 @@
-// import { decoTest } from './deco.hBriefTest'
+// import { DecoTest } from './brief.test/deco.test'
 //
-// decoTest()
+// DecoTest.decoTest()
 
 // import { RegexTest } from './brief.test/regex.test'
 //
@@ -15,17 +15,17 @@
 // // ArrayTest.hBriefTest()
 // ArrayTest.vBriefTest()
 //
-// import { MapTest } from './brief.test/map.test'
-//
-// MapTest.vBriefTest()
+import { TestMapX } from './brief.test/test.MapX'
+
+TestMapX.vBriefTest()
 //
 // import { MatrixTest } from './brief.test/matrix.test'
 //
 // MatrixTest.xBriefTest()
 
-import { TypTest } from './typ.test/typ.test'
-
-TypTest.simpleTest()
+// import { TypTest } from './typ.test/typ.test'
+//
+// TypTest.simpleTest()
 
 // import { PreciTest } from './brief.test/preci.test'
 //

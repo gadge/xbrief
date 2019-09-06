@@ -1,8 +1,8 @@
-import { rn } from '../misc/clay'
+import { rn } from '../utils/clay'
 import { Typ } from '../typ/Typ'
-import { Preci } from '../misc/Preci'
+import { Preci } from '../utils/Preci'
 import { VecX } from '../brief/VecX'
-import { columnIndexes } from '../misc/columnIndexes'
+import { columnIndexes } from '../utils/columnIndexes'
 
 class MatX {
   /**
@@ -39,16 +39,6 @@ class MatX {
     return '[' + lines.map(row => `[${row}]`).join(`,${rn} `) + ']'
   }
 }
-
-Array.prototype.xBrief =
-  function ({
-    abstract, rows = { head: 0, tail: 0 }, columns = {
-      head: 0,
-      tail: 0,
-    },
-  } = {}) {
-    return MatX.xBrief(this, { abstract, rows, columns })
-  }
 
 export {
   MatX,

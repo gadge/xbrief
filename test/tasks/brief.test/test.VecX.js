@@ -47,7 +47,7 @@ const paramSet = [
   }
 ]
 
-class ArrayTest {
+class TestVecX {
   static determineArray () {
     const candidates = [
       null,
@@ -58,7 +58,7 @@ class ArrayTest {
       new Set([1, 2, 3, 2, 1]),
       { 1: 'a', 2: 'b', 3: 'c' }
     ]
-    GP.now().tag(`${ArrayTest.name}.${ArrayTest.determineArray.name}`).wL()
+    GP.now().tag(`${TestVecX.name}.${TestVecX.determineArray.name}`).wL()
     for (let [i, candidate] of candidates.entries()) {
       `${i}`.tag('isArray and length').wL()
       console.log(candidate);
@@ -69,7 +69,7 @@ class ArrayTest {
   }
 
   static hBriefTest () {
-    ''.tag(`${ArrayTest.name}.${ArrayTest.hBriefTest.name}`).wL()
+    ''.tag(`${TestVecX.name}.${TestVecX.hBriefTest.name}`).wL()
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
@@ -80,7 +80,7 @@ class ArrayTest {
   }
 
   static vBriefTest () {
-    ''.tag(`${ArrayTest.name}.${ArrayTest.vBriefTest.name}`).wL()
+    ''.tag(`${TestVecX.name}.${TestVecX.vBriefTest.name}`).wL()
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
@@ -92,8 +92,8 @@ class ArrayTest {
 }
 
 test('ArrayTest.vBriefTest', () => {
-  ArrayTest.vBriefTest()
+  TestVecX.vBriefTest()
   // expect(sum(1, 2)).toBe(3);
 })
 
-export { ArrayTest }
+export { TestVecX }

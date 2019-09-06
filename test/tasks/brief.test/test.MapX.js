@@ -1,5 +1,5 @@
 import { superlativeTrees } from '../../asset/superlativTrees.json'
-import { MapX } from '../../../src'
+import { deco, MapX } from '../../../src'
 import { GP } from 'elprimero'
 
 const mapSet = {
@@ -34,9 +34,10 @@ const paramSet = {
     tail: 1
   }
 }
-export class MapTest {
+
+class TestMapX {
   static hBriefTest () {
-    GP.now().tag(`${MapTest.name}.${MapTest.hBriefTest.name}`).wL()
+    GP.now().tag(`${TestMapX.name}.${TestMapX.hBriefTest.name}`).wL()
     for (let [paramKey, param] of Object.entries(paramSet)) {
       paramKey.tag(JSON.stringify(param)).wL()
       for (let [k, lex] of Object.entries(mapSet)) {
@@ -47,14 +48,18 @@ export class MapTest {
   }
 
   static vBriefTest () {
-    GP.now().tag(`${MapTest.name}.${MapTest.vBriefTest.name}`).wL()
+    GP.now().tag(`${TestMapX.name}.${TestMapX.vBriefTest.name}`).wL()
     for (let [paramKey, paramEntity] of Object.entries(paramSet)) {
       paramKey.tag(JSON.stringify(paramEntity)).wL()
-      paramKey.deco(paramEntity).wL()
+      paramKey.tag(deco(paramEntity)).wL()
       for (let [dictName, dictEntity] of Object.entries(mapSet)) {
         `  ${dictName}`.tag(MapX.vBrief.call(null, dictEntity, paramEntity)).wL()
       }
       ''.wL()
     }
   }
+}
+
+export {
+  TestMapX
 }

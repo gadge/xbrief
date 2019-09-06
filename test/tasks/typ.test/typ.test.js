@@ -1,4 +1,5 @@
-import { VecX, Typ } from '../../../src/index'
+import { Typ } from '../../../src/index'
+import { MapX } from '../../../src/brief/MapX'
 
 class TypTest {
   static simpleTest () {
@@ -14,10 +15,10 @@ class TypTest {
       new Set(['']),
       { 'foo': 'bar' },
     ]
-    const type_results = candidates.map(
-      it => [!!it ? it.toString() : it, Typ.inferObject(it)]
-    )
-    VecX.vBrief(type_results).wL()
+    const results = new Map(candidates.map(
+      it => [it, Typ.inferType(it)]
+    ))
+    MapX.vBrief(results).wL()
   }
 
 }
