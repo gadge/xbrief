@@ -17,7 +17,7 @@ export default [
   {
     input: 'src/index.js',
     output: {
-      name: 'xbrief',
+      name: pkg.name,
       file: pkg.browser,
       format: 'umd'
     },
@@ -38,7 +38,10 @@ export default [
     // external: ['ms'],
     output: [
       { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
+      { file: pkg.module, format: 'esm' },
+    ],
+    plugins: [
+      resolve(), // so Rollup can find `ms`
     ]
   }
 ]

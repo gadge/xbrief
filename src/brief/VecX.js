@@ -31,7 +31,7 @@ class VecX {
   /**
    *
    * @param {*[]} arr
-   * @param {function} abstract
+   * @param {function|function(*=):string} abstract
    * @param {number} head
    * @param {number} tail
    * @return {*}
