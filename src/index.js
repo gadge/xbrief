@@ -12,25 +12,12 @@ Number.prototype.tag = function (val) {
   return StrX.tag(this.toString(), val)
 }
 
-export { StrX } from './brief/StrX'
+export { StrX }
 export { VecX } from './brief/VecX'
 export { MatX } from './brief/MatX'
 export { MapX } from './brief/MapX'
 export { deco } from './brief/deco'
 export { Typ } from './typ/Typ'
-export { Formo, MoneyFormo, PercentFormo, MagnitudeFormo } from './formos/formo'
+export { MoneyForm, PercentForm, MagnitudeForm, toPercent } from './formos/form'
 export { noop } from './utils/clay'
 export { Preci } from './utils/Preci'
-
-// export {
-//   Str,
-//   VecX,
-//   MatX,
-//   MapX,
-//   deco,
-//   Typ,
-//   Formo,
-//   MoneyFormo,
-//   PercentFormo,
-//   MagnitudeFormo
-// }

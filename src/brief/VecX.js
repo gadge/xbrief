@@ -59,7 +59,7 @@ class VecX {
    * @param {string[]} texts
    */
   static maxLength (texts) {
-    return Math.max(...texts.map(x => x.length))
+    return Math.max(...texts.map(x => !!x ? x.length : 0))
   }
 
   /**

@@ -1,10 +1,4 @@
-  class Formo {
-  static toPercent (num, fracDigit = 0) {
-    return (num * 100).toFixed(fracDigit) + '%'
-  }
-}
-
-class MagnitudeFormo {
+class MagnitudeForm {
   constructor (fracDigit = 2, magniSep = 3) {
     this.fracDigit = fracDigit
     this.numRegex = new RegExp(
@@ -16,7 +10,7 @@ class MagnitudeFormo {
   }
 }
 
-class PercentFormo {
+class PercentForm {
   constructor (fracDigit = 0) {
     this.formos = new Intl.NumberFormat(undefined,
       { style: 'percent', minimumFractionDigits: fracDigit })
@@ -27,9 +21,9 @@ class PercentFormo {
   }
 }
 
-class MoneyFormo {
+class MoneyForm {
   constructor (region) {
-    let config = MoneyFormo.getCurrencyConfig(region)
+    let config = MoneyForm.getCurrencyConfig(region)
     this.formos = new Intl.NumberFormat(config.locale, config.options)
   }
 
@@ -56,22 +50,22 @@ class MoneyFormo {
       locale: locale,
       options: {
         style: 'currency',
-        currency: MoneyFormo.localeToCurrency.get(locale),
+        currency: MoneyForm.localeToCurrency.get(locale),
         currencyDisplay: 'symbol'
       }
     }
   }
 }
 
-Number.prototype.toPercent = function (fracDigit = 0) {
-  return (this * 100).toFixed(fracDigit) + '%'
+function toPercent (num, fracDigit = 0) {
+  return (num * 100).toFixed(fracDigit) + '%'
 }
 
 export {
-  Formo,
-  MoneyFormo,
-  PercentFormo,
-  MagnitudeFormo
+  MoneyForm,
+  PercentForm,
+  MagnitudeForm,
+  toPercent
 }
 
 // '123456789.01234'.replace(/\B(?=(?=\d*\.)(\d{3})+(?!\d))/g, '_')

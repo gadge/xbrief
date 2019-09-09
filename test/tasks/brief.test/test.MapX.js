@@ -1,5 +1,5 @@
 import { superlativeTrees } from '../../asset/superlativTrees.json'
-import { deco, MapX } from '../../../src'
+import { deco, MapX } from '../../../dist/xbrief.esm'
 import { GP } from 'elprimero'
 
 const mapSet = {
