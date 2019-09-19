@@ -1,7 +1,8 @@
 import axios from 'axios/index'
 import { Xio } from '../../utils/axios-ext'
-import { deco } from '../../../src'
+import { deco, Typ, StrX, MoneyForm } from '../../../src'
 import { superlativeTrees } from '../../asset/superlativTrees.json'
+import { Player } from '../../asset/Player'
 
 axios.defaults.withCredentials = true
 
@@ -25,21 +26,39 @@ class DecoTest {
   static decoTest () {
     const simple_array = [1, 2, 3, 4, 5]
     const objects = {
+      boolean: true,
+      string: 'Shakespeare',
+      number: 128,
+      null: null,
+      undefined: undefined,
       simple_array: simple_array,
       empty_matrix: [[]],
       one_row_matrix: [simple_array],
+      simple_set: new Set([1, 1, 1, 2, 2, 3, 3, 3]),
       simple_matrix: Array.from({ length: 3 }, (_, x) =>
         Array.from({ length: 12 }, (_, y) =>
           x + y + 1
         )
       ),
-      superlativeTrees_map: superlativeTrees
+      superlativeTrees_map: superlativeTrees,
+      simple_lambda: (x) => `${x}`,
+      simple_func: StrX.wL,
+      class_ins: new MoneyForm('zh-CN'),
+      class: MoneyForm,
+      class_ins2: new Player('Messi', '001'),
+      class2: Player
     }
-    for (let [k, v] of Object.entries(objects)) {
-      k.tag(deco(v)).wL()
-    }
+    objects |> deco |> console.log
+    // for (let [k, v] of Object.entries(objects)) {
+    //   // v |> Typ.check |> console.log
+    //   k.tag(deco(v)).wL()
+    // }
   }
 }
+
+test('deco test', () => {
+  DecoTest.decoTest()
+})
 
 export { DecoTest }
 

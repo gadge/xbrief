@@ -1,5 +1,5 @@
 export class ArrayBriefTest {
-  static foo ({ x, y = 5 }) {
+  static foo ({ x, y = 5 } = {}) {
     console.log(x, y)
   }
 
@@ -9,5 +9,4 @@ export class ArrayBriefTest {
     ArrayBriefTest.foo({ x: 1, y: 2 }) // 1 2
     ArrayBriefTest.foo() // TypeError: Cannot read property 'x' of undefined
   }
-
 }

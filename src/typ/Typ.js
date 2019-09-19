@@ -1,4 +1,4 @@
-// let inferTypo = function (it) {
+// let protoType = function (it) {
 //   const raw = typeof it;
 //   if (raw === "object") {
 //     switch (true) {
@@ -27,6 +27,10 @@ class Typ {
     return typeof x === 'number'
   }
 
+  static isArr (x) {
+    return !!x ? x.constructor === Array : false
+  }
+
 // Angular 4.3
   static isNumeric (v) {
     return !isNaN(v - parseFloat(v))
@@ -50,24 +54,24 @@ class Typ {
   }
 
   /**
-   * inferTypo(o) = Object.prototype.toString.call(o)
-   * @example inferTypo([]) // "[object Array]". inferTypo({}) // "[object Object]"
-   * @param {*} obj
+   * protoType(o) = Object.prototype.toString.call(o)
+   * @example protoType([]) // "[object Array]". protoType({}) // "[object Object]"
+   * @param {*} o
    * @returns {string} Inferred typ in [object "Type"] form.
    */
-  static inferTypo (obj) {
-    return Object.prototype.toString.call(obj)
+  static protoType (o) {
+    return Object.prototype.toString.call(o)
   }
 
-  static inferType (it) {
-    const raw = typeof it
+  static inferType (o) {
+    const raw = typeof o
     return raw === 'object'
-      ? Typ.inferObject(it)
+      ? Typ.objectType(o)
       : raw
   }
 
-  static inferObject (it) {
-    const [, info] = Object.prototype.toString.call(it).match(rxObj)
+  static objectType (o) {
+    const [, info] = Object.prototype.toString.call(o).match(rxObj)
     return info.toLowerCase()
     // return str.match(rxObj)[1].toLowerCase()
   }
@@ -75,9 +79,10 @@ class Typ {
   static check (x) {
     const info = {
       toString: `${x}`,
-      prototypeCall: Object.prototype.toString.call(x),
-      notUndefined: x !== undefined,
-      type: Typ.inferType(x),
+      typeOf: typeof x,
+      protoType: Object.prototype.toString.call(x),
+      inferType: Typ.inferType(x),
+      notUdf: x !== undefined,
       '!!': !!x
     }
     return deco(info)

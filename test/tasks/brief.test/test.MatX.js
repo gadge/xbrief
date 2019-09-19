@@ -78,14 +78,14 @@ const paramSet = {
   }
 }
 
-test('MatrixTest.xBriefTest', () => {
-  MatrixTest.xBriefTest()
-  // expect(sum(1, 2)).toBe(3);
-})
+// test('MatrixTest.xBriefTest', () => {
+//   TestMatX.xBriefTest()
+//   // expect(sum(1, 2)).toBe(3);
+// })
 
-export class MatrixTest {
+export class TestMatX {
   static xBriefTest () {
-    ''.tag(`${MatrixTest.name}.${MatrixTest.xBriefTest.name}`).wL()
+    ''.tag(`${TestMatX.name}.${TestMatX.xBriefTest.name}`).wL()
     for (let [paramName, param] of Object.entries(paramSet)) {
       `  ${paramName}`.tag(JSON.stringify(param)).wL()
       for (let [key, matrix] of Object.entries(matrixSet)) {
@@ -93,6 +93,14 @@ export class MatrixTest {
       }
       ''.wL()
     }
+  }
+
+  static xBriefTestParam () {
+    'matrixSet.boxOffice'.wL()
+    MatX.xBrief(matrixSet.boxOffice, {
+        rows: { head: 5 }
+      }
+    )
   }
 
   // static test () {

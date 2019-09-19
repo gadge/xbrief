@@ -6,10 +6,10 @@ class VecX {
   /**
    *
    * @param {*[]} arr
-   * @param {string} delimiter
-   * @param {function} abstract
-   * @param {number} head
-   * @param {number} tail
+   * @param {string} [delimiter]
+   * @param {function(*):string} [abstract]
+   * @param {number} [head]
+   * @param {number} [tail]
    * @return {string}
    */
   static hBrief (arr, {
@@ -31,9 +31,9 @@ class VecX {
   /**
    *
    * @param {*[]} arr
-   * @param {function|function(*=):string} abstract
-   * @param {number} head
-   * @param {number} tail
+   * @param {function(*):string} [abstract]
+   * @param {number} [head]
+   * @param {number} [tail]
    * @return {*}
    */
   static vBrief (arr, {
@@ -71,27 +71,50 @@ class VecX {
     return Math.max(...arr.map(x => lengthSelector(x).length))
   }
 
-  /**
-   *
-   * @param {string[]} texts
-   * @param {number[]} padWidths
-   * @param {string|null} fillString
-   * @return {string[]}
-   */
-  static padStarts (texts, padWidths, fillString = undefined) {
+  static pads (arr, { direction = 'l', selfBench = false, padWidths, fillString }) {
 
-    return texts.map((x, i) => x.padStart(padWidths[i], fillString))
   }
 
   /**
    *
    * @param {string[]} texts
-   * @param {number[]} padWidths
-   * @param {string|null} fillString
+   * @param {number[]|number} [padWidths]
+   * @param {string} [fillString]
    * @return {string[]}
    */
-  static padEnds (texts, padWidths, fillString = undefined) {
-    return texts.map((x, i) => x.padEnd(padWidths[i], fillString))
+  static padStarts (texts, padWidths, fillString) {
+    switch (true) {
+      case !padWidths:
+        const pad = texts |> VecX.maxLength
+        return texts.map(x => x.padStart(pad, fillString))
+      case typeof padWidths === 'number':
+        return texts.map(x => x.padStart(padWidths, fillString))
+      case Array.isArray(padWidths):
+        return texts.map((x, i) => x.padStart(padWidths[i], fillString))
+      default:
+        return texts
+    }
+  }
+
+  /**
+   *
+   * @param {string[]} texts
+   * @param {number[]|number} [padWidths]
+   * @param {string} [fillString]
+   * @return {string[]}
+   */
+  static padEnds (texts, padWidths, fillString) {
+    switch (true) {
+      case !padWidths:
+        const pad = texts |> VecX.maxLength
+        return texts.map(x => x.padEnd(pad, fillString))
+      case typeof padWidths === 'number':
+        return texts.map(x => x.padEnd(padWidths, fillString))
+      case Array.isArray(padWidths):
+        return texts.map((x, i) => x.padEnd(padWidths[i], fillString))
+      default:
+        return texts
+    }
   }
 
   static tagsIndexed (arr, startIndex = 1) {

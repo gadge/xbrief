@@ -4,13 +4,14 @@ import { Preci } from '../utils/Preci'
 import { VecX } from '../brief/VecX'
 import { columnIndexes } from '../utils/columnIndexes'
 
+
 class MatX {
   /**
    *
    * @param {*[][]} matrix
-   * @param {function} abstract
-   * @param {{head:number,tail:number}} rows
-   * @param {{head:number,tail:number}} columns
+   * @param {?function(*):string} [abstract]
+   * @param {{[head]:number,[tail]:number}} [rows]
+   * @param {{[head]:number,[tail]:number}} [columns]
    * @returns {string}
    */
   static xBrief (
@@ -21,14 +22,16 @@ class MatX {
       columns = { head: 0, tail: 0 },
     } = {},
   ) {
-    const rowwiseAbstract = !!abstract
-      ? row => row.map(x => `${abstract(x)}`)
-      : row => row.map(x => `${x}`)
-    const rowsPreci = Preci.fromArr(matrix, rows.head, rows.tail).
-      map(row => Preci.fromArr(row, columns.head, columns.tail).toList('...')).
-      map(rowwiseAbstract)
+    const rowsPreci = Preci
+      .fromArr(matrix, rows.head, rows.tail)
+      .map(
+        row => Preci
+          .fromArr(row, columns.head, columns.tail)
+          .map(!!abstract ? abstract : x => `${x}`)
+          .toList('...')
+      )
     const colIndexes = columnIndexes(rowsPreci.toList())
-    const rowList = rowsPreci.toList(colIndexes.map(() => '..'))
+    const rowList = rowsPreci.toList(colIndexes.map(_ => '..'))
     const columnList = colIndexes.map(c => rowList.map(row => row[c]))
     const widths = columnList.map(VecX.maxLength)
     let lines = rowList.map((row) =>

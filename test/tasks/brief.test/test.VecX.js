@@ -1,4 +1,4 @@
-import { Str, VecX } from '../../../dist/xbrief.esm'
+import { StrX, VecX } from '../../../src/index'
 import { GP } from 'elprimero'
 
 const superlativeTrees = {
@@ -88,6 +88,11 @@ class TestVecX {
       }
       ''.wL()
     }
+  }
+
+  static vBriefTestParam () {
+    const trees = Object.keys(superlativeTrees).map(name => name|>StrX.jv2py)
+    'trees'.tag(VecX.vBrief(trees, { abstract: it => `${it}` })).wL()
   }
 }
 

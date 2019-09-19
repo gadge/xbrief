@@ -22,8 +22,7 @@ export class Preci {
     //     ? [arr.slice(0, head), arr.slice(-tail)]
     //     : [arr, null]
     //   : [null, null]
-
-    let [h, t] = arr && !!arr.length
+    let [h, t] = !!arr && !!arr.length
       ? !!head && head > 0 && head <= arr.length
         ? !!tail && tail > 0 && tail <= arr.length
           ? [arr.slice(0, head), arr.slice(-tail)]
@@ -87,11 +86,11 @@ export class Preci {
 
   /**
    *
-   * @param {function|null} abstract
-   * @param {function|null} abstractTail
+   * @param {?function} abstract
+   * @param {?function} [abstractTail]
    * @return {Preci}
    */
-  map (abstract, abstractTail = undefined) {
+  map (abstract, abstractTail) {
     const head = !!this.head && !!abstract
       ? this.head.map(abstract)
       : this.head

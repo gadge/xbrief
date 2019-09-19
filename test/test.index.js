@@ -1,4 +1,4 @@
-// import { DecoTest } from './brief.test/deco.test'
+// import { DecoTest } from './tasks/brief.test/deco.test'
 //
 // DecoTest.decoTest()
 
@@ -15,13 +15,13 @@
 // // ArrayTest.hBriefTest()
 // ArrayTest.vBriefTest()
 //
-import { TestMapX } from './brief.test/test.MapX'
+// import { TestMapX } from './brief.test/test.MapX'
+//
+// TestMapX.vBriefTest()
+//
+import {TestMatX } from './tasks/brief.test/test.MatX'
 
-TestMapX.vBriefTest()
-//
-// import { MatrixTest } from './brief.test/matrix.test'
-//
-// MatrixTest.xBriefTest()
+TestMatX.xBriefTest()
 
 // import { TypTest } from './typ.test/typ.test'
 //

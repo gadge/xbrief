@@ -6,11 +6,11 @@ import { VecX } from './VecX'
 class MapX {
   /**
    *
-   * @param {Map} dict
-   * @param {string} delimiter
-   * @param {function} abstract
-   * @param {number} head
-   * @param {number} tail
+   * @param {Map<*,*>} dict
+   * @param {string} [delimiter]
+   * @param {function(*):string} [abstract]
+   * @param {number} [head]
+   * @param {number} [tail]
    * @returns {string}
    */
   static hBrief (dict,
@@ -36,10 +36,10 @@ class MapX {
 
   /***
    *
-   * @param {Map} dict
-   * @param {function} abstract
-   * @param {number} head
-   * @param {number} tail
+   * @param {Map<*,*>} dict
+   * @param {function(*):string} [abstract]
+   * @param {number} [head]
+   * @param {number} [tail]
    * @returns {string}
    */
   static vBrief (dict, { abstract, head, tail } = {}) {
