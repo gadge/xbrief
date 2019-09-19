@@ -16,7 +16,7 @@ class TypTest {
       { 'foo': 'bar' },
     ]
     const results = new Map(candidates.map(
-      it => [it, Typ.inferType(it)]
+      it => [it, Typ.infer(it)]
     ))
     MapX.vBrief(results).wL()
   }

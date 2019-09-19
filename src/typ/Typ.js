@@ -20,15 +20,39 @@
 
 import { deco } from '../brief/deco'
 
-const rxObj = /^\[object (.*)]$/
+const oc = Object.prototype.toString
+
+/**
+ * const rxObj = /^\[object (.*)]$/
+ * Equivalent to: Object.prototype.toString.call(o).match(rxObj)[1]
+ * @param {*} o
+ * @return {string}
+ */
+function otype (o) {
+  return oc.call(o).slice(8, -1)
+
+}
 
 class Typ {
-  static isNum (x) {
-    return typeof x === 'number'
+  static infer (o) {
+    const raw = typeof o
+    return raw !== 'object'
+      ? raw
+      : otype(o).toLowerCase()
   }
 
-  static isArr (x) {
-    return !!x ? x.constructor === Array : false
+  /**
+   * protoType(o) = oc.call(o)
+   * @example protoType([]) // "[object Array]". protoType({}) // "[object Object]"
+   * @param {*} o
+   * @returns {string} Inferred typ in [object "Type"] form.
+   */
+  static protoType (o) {
+    return oc.call(o)
+  }
+
+  static isNum (x) {
+    return typeof x === 'number'
   }
 
 // Angular 4.3
@@ -53,35 +77,12 @@ class Typ {
     }
   }
 
-  /**
-   * protoType(o) = Object.prototype.toString.call(o)
-   * @example protoType([]) // "[object Array]". protoType({}) // "[object Object]"
-   * @param {*} o
-   * @returns {string} Inferred typ in [object "Type"] form.
-   */
-  static protoType (o) {
-    return Object.prototype.toString.call(o)
-  }
-
-  static inferType (o) {
-    const raw = typeof o
-    return raw === 'object'
-      ? Typ.objectType(o)
-      : raw
-  }
-
-  static objectType (o) {
-    const [, info] = Object.prototype.toString.call(o).match(rxObj)
-    return info.toLowerCase()
-    // return str.match(rxObj)[1].toLowerCase()
-  }
-
   static check (x) {
     const info = {
       toString: `${x}`,
       typeOf: typeof x,
-      protoType: Object.prototype.toString.call(x),
-      inferType: Typ.inferType(x),
+      protoType: oc.call(x),
+      inferType: Typ.infer(x),
       notUdf: x !== undefined,
       '!!': !!x
     }
