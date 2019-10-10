@@ -23,6 +23,10 @@ class TypTest {
 
 }
 
+test('TypTest simpleTest', () => {
+  TypTest.simpleTest()
+})
+
 export {
   TypTest
 }

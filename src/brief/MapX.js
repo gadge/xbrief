@@ -22,12 +22,11 @@ class MapX {
                  } = {}
   ) {
     const textAbstract = abstract
-      ? ([k, v]) => [`${k}`, `${abstract(v)}`]
-      : ([k, v]) => [`${k}`, `${v}`]
-    const preci = Preci
+      ? ([k, v]) => `${k}:(${abstract(v)})`
+      : ([k, v]) => `${k}:(${v})`
+    const elements = Preci
       .fromArr([...dict.entries()], head, tail)
       .map(textAbstract)
-    const elements = preci.map(EntX.simpleBrief)
       .toList('...')
     return elements.length > 0
       ? elements.join(delimiter)

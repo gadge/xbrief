@@ -62,7 +62,7 @@ class StrX {
 
   static narrowExclude (tx, lb, rb) {
     const [li, ri] = [tx.indexOf(lb), tx.lastIndexOf(rb)]
-    return li > 0 && ri > 0 ? tx.slice(li + lb.length, ri) : tx
+    return li && ri ? tx.slice(li + lb.length, ri) : tx
   }
 
   /**
@@ -74,7 +74,7 @@ class StrX {
    * @returns {boolean}
    */
   static hasChn (str) {
-    return str.search(/[\u4e00-\u9fa5]/) !== -1
+    return str.search(/[\u4e00-\u9fa5]|[\uff00-\uffff]/) !== -1
   }
 
   /**
@@ -87,18 +87,16 @@ class StrX {
    * @constructor
    */
   static toFullAngle (tx) {
-    let tmp = ''
+    let t = ''
     for (let c of tx) {
-      const code = c.charCodeAt(0)
-      if (code === 32) {
-        tmp = tmp + String.fromCharCode(12288)
-      } else if (code < 127) {
-        tmp = tmp + String.fromCharCode(code + 65248)
-      } else {
-        tmp = tmp + c
-      }
+      const co = c.charCodeAt(0)
+      t = co === 32
+        ? t + String.fromCharCode(12288)
+        : co < 127
+          ? t + String.fromCharCode(co + 65248)
+          : t + c
     }
-    return tmp
+    return t
   }
 
   /**
@@ -109,18 +107,23 @@ class StrX {
    * @constructor
    */
   static toHalfAngle (tx) {
-    let tmp = ''
+    let t = ''
     for (let c of tx) {
-      const code = c.charCodeAt(0)
-      if (code === 12288) {
-        tmp += String.fromCharCode(code - 12256)
-      } else if (code > 65280 && code < 65375) {
-        tmp += String.fromCharCode(code - 65248)
-      } else {
-        tmp += String.fromCharCode(code)
-      }
+      const co = c.charCodeAt(0)
+      // if (co === 12288) {
+      //   t += String.fromCharCode(co - 12256)
+      // } else if (co > 65280 && co < 65375) {
+      //   t += String.fromCharCode(co - 65248)
+      // } else {
+      //   t += String.fromCharCode(co)
+      // }
+      t += co === 12288
+        ? String.fromCharCode(co - 12256)
+        : co > 65280 && co < 65375
+          ? String.fromCharCode(co - 65248)
+          : String.fromCharCode(co)
     }
-    return tmp
+    return t
   }
 
   static indexOfFirstNonTab (tx) {

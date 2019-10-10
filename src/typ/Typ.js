@@ -18,29 +18,19 @@
 //   }
 // };
 
-import { deco } from '../brief/deco'
-
 const oc = Object.prototype.toString
 
 /**
  * const rxObj = /^\[object (.*)]$/
- * Equivalent to: Object.prototype.toString.call(o).match(rxObj)[1]
+ * Equivalent to: Object.prototype.stringify.call(o).match(rxObj)[1]
  * @param {*} o
  * @return {string}
  */
 function otype (o) {
   return oc.call(o).slice(8, -1)
-
 }
 
 class Typ {
-  static infer (o) {
-    const raw = typeof o
-    return raw !== 'object'
-      ? raw
-      : otype(o).toLowerCase()
-  }
-
   /**
    * protoType(o) = oc.call(o)
    * @example protoType([]) // "[object Array]". protoType({}) // "[object Object]"
@@ -49,6 +39,17 @@ class Typ {
    */
   static protoType (o) {
     return oc.call(o)
+  }
+
+  static infer (o) {
+    const raw = typeof o
+    return raw !== 'object'
+      ? raw
+      : otype(o).toLowerCase()
+  }
+
+  static initial (o) {
+    return oc.call(o).slice(8, 11)
   }
 
   static isNum (x) {
@@ -60,33 +61,21 @@ class Typ {
     return !isNaN(v - parseFloat(v))
   }
 
-  static notUdf (it) {
-    return it !== undefined
-  }
-
-  static isNumStrBooUdf (it) {
-    const typ = typeof it
-    switch (typ) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-      case 'undefined':
-        return true
-      default:
-        return false
-    }
-  }
-
+  /**
+   *
+   * @param x
+   * @return {{
+   * typeOf: ("undefined"|"object"|"boolean"|"number"|"string"|"function"|"symbol"|"bigint"),
+   * protoType: *,
+   * stringify: string
+   * }}
+   */
   static check (x) {
-    const info = {
-      toString: `${x}`,
+    return {
       typeOf: typeof x,
       protoType: oc.call(x),
-      inferType: Typ.infer(x),
-      notUdf: x !== undefined,
-      '!!': !!x
+      stringify: `${x}`,
     }
-    return deco(info)
   }
 }
 

@@ -2,8 +2,7 @@ import { rn } from '../utils/clay'
 import { Typ } from '../typ/Typ'
 import { Preci } from '../utils/Preci'
 import { VecX } from '../brief/VecX'
-import { columnIndexes } from '../utils/columnIndexes'
-
+import { columnKeys } from '../utils/algebra'
 
 class MatX {
   /**
@@ -30,15 +29,16 @@ class MatX {
           .map(!!abstract ? abstract : x => `${x}`)
           .toList('...')
       )
-    const colIndexes = columnIndexes(rowsPreci.toList())
-    const rowList = rowsPreci.toList(colIndexes.map(_ => '..'))
-    const columnList = colIndexes.map(c => rowList.map(row => row[c]))
-    const widths = columnList.map(VecX.maxLength)
+    const cKeys = columnKeys(rowsPreci.toList())
+    const rowList = rowsPreci.toList(cKeys.map(_ => '..'))
+    const columnList = cKeys.map(c => rowList.map(row => row[c]))
+    const pads = columnList.map(VecX.maxLength)
     let lines = rowList.map((row) =>
       row.map((x, i) => Typ.isNumeric(x)
-        ? (x).padStart(widths[i])
-        : (x).padEnd(widths[i]),
-      ).join(' | '))
+        ? (x).padStart(pads[i])
+        : (x).padEnd(pads[i]),
+      ).join(' | ')
+    )
     return '[' + lines.map(row => `[${row}]`).join(`,${rn} `) + ']'
   }
 }

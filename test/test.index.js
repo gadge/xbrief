@@ -6,7 +6,7 @@
 //
 // RegexTest.matchWords()
 
-// import { StringTest } from './brief.test/string.test'
+// import {StringTest} from './tasks/brief.test/string.test'
 //
 // StringTest.test()
 
@@ -15,13 +15,17 @@
 // // ArrayTest.hBriefTest()
 // ArrayTest.vBriefTest()
 //
-// import { TestMapX } from './brief.test/test.MapX'
-//
-// TestMapX.vBriefTest()
-//
-import {TestMatX } from './tasks/brief.test/test.MatX'
+import { TestMapX } from './tasks/brief.test/test.MapX'
 
-TestMatX.xBriefTest()
+TestMapX.hBriefTest()
+//
+// import { TestMatX } from './tasks/brief.test/test.MatX'
+//
+// TestMatX.xBriefTest()
+
+// import { TabXTest } from './tasks/brief.test/TabX.test'
+//
+// TabXTest.test()
 
 // import { TypTest } from './typ.test/typ.test'
 //

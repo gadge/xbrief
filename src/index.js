@@ -16,6 +16,7 @@ export { StrX }
 export { VecX } from './brief/VecX'
 export { MatX } from './brief/MatX'
 export { MapX } from './brief/MapX'
+export { TabX } from './brief/TabX'
 export { deco } from './brief/deco'
 export { Typ } from './typ/Typ'
 export { MoneyForm, PercentForm, MagnitudeForm, toPercent } from './formos/form'

@@ -41,7 +41,7 @@ class TestMapX {
     for (let [paramKey, param] of Object.entries(paramSet)) {
       paramKey.tag(JSON.stringify(param)).wL()
       for (let [k, lex] of Object.entries(mapSet)) {
-        `  ${k}`.tag(lex.hBrief.apply(lex, [...Object.values(param)])).wL()
+        `  ${k}`.tag(MapX.hBrief.call(null, lex, param)).wL()
       }
       ''.wL()
     }
