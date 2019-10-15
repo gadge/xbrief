@@ -1,9 +1,11 @@
-import { rn, tb } from '../utils/clay'
+import { afterNaTab, indexNaTab, isTab, rn, tb } from '../utils/str'
+import hasAnsi from 'has-ansi'
+import stringLength from 'string-length'
 
-class StrReg {}
-
-StrReg.jv2py = /[A-Z]+|[0-9]+/g
-StrReg.py2jv = /[A-Za-z\d]+/g
+const StrReg = {
+  jv2py: /[A-Z]+|[0-9]+/g,
+  py2jv: /[A-Za-z\d]+/g
+}
 
 class StrX {
 
@@ -39,7 +41,7 @@ class StrX {
   }
 
   static tag (label, item) {
-    const i = StrX.indexOfFirstNonTab(label)
+    const i = indexNaTab(label)
     let [key, text] = [
       label.endsWith(')')
         ? label
@@ -49,7 +51,7 @@ class StrX {
     if (text.includes('\n')) {
       const t = ' '.repeat(i)
       text = (text.endsWith('}') || text.endsWith(']')) && !text.endsWith(']]')
-        ? StrX.afterFirstNonTab(text.split(rn).map(x => t + x).join(rn))
+        ? afterNaTab(text.split(rn).map(x => t + x).join(rn))
         : ['', ...text.split(rn).map(x => t + tb + x), t].join(rn)
     }
     return `${key} (${text})`
@@ -63,6 +65,18 @@ class StrX {
   static narrowExclude (tx, lb, rb) {
     const [li, ri] = [tx.indexOf(lb), tx.lastIndexOf(rb)]
     return li && ri ? tx.slice(li + lb.length, ri) : tx
+  }
+
+  static padStartAnsi (tx, len, fill) {
+    return hasAnsi(tx)
+      ? tx.padStart(tx.length + len - stringLength(tx), fill)
+      : tx.padStart(len, fill)
+  }
+
+  static padEndAnsi (tx, len, fill) {
+    return hasAnsi(tx)
+      ? tx.padEnd(tx.length + len - stringLength(tx), fill)
+      : tx.padEnd(len, fill)
   }
 
   /**
@@ -126,16 +140,14 @@ class StrX {
     return t
   }
 
-  static indexOfFirstNonTab (tx) {
+  static indexNonTab (tx) {
     let i = 0
-    while (tx.startsWith('\t', i) || tx.startsWith(' ', i)) {
-      i++
-    }
+    for (let { length } = tx; i < length; i++) if (!isTab(tx.charAt(i))) return i
     return i
   }
 
-  static afterFirstNonTab (tx) {
-    return tx.substring(StrX.indexOfFirstNonTab(tx))
+  static afterNonTab (tx) {
+    return tx.substring(indexNaTab(tx))
   }
 }
 

@@ -1,11 +1,27 @@
-import { tb, rn } from '../utils/clay'
+import { tb, rn } from '../utils/str'
 import { Typ } from '../typ/Typ'
+import chalk from 'chalk'
+import { palette } from 'spettro'
+import stringLength from 'string-length'
 
 let deco = function (obj) {
   return deNode(obj, 0)
 }
 
-const targets = ['object', 'function']
+const
+  _o = 'object',
+  _f = 'function',
+  isSimple = (x) => !x || typeof x !== _o && typeof x !== _f
+
+const
+  pal = {
+    idx: palette.brown.lighten_4,
+    str: palette.lightGreen.accent_2,
+    num: palette.deepOrange.accent_2,
+    udf: palette.deepPurple.accent_2,
+    brk: palette.blue.accent_2,
+    brc: palette.amber.base
+  }
 
 /**
  *
@@ -14,19 +30,39 @@ const targets = ['object', 'function']
  * @return {string}
  */
 function deNode (node, l = 0) {
-  if (!node || !targets.includes(typeof node)) return `${node}`
+  switch (typeof node) {
+    case 'string':
+      return `${chalk.hex(pal.str)(node)}`
+    case 'object':
+    case 'function':
+      return deJson(node, l)
+    case 'bigint':
+    case 'number':
+      return `${chalk.hex(pal.num)(node)}`
+    case 'boolean':
+    case 'symbol':
+    case 'undefined':
+      return `${chalk.hex(pal.udf)(node)}`
+  }
+}
+
+const bracket = content => chalk.hex(pal.brk)('[ ') + content + chalk.hex(pal.brk)(' ]')
+
+const brace = content => chalk.hex(pal.brc)('{') + content + chalk.hex(pal.brc)('}')
+
+function deJson (node, l = 0) {
   let [r, concat] = [rn + tb.repeat(l), '']
   const typ = Typ.initial(node)
   switch (typ) {
     case 'Arr':
       concat = deList(node, l, r)
-      return `[${concat}]`
+      return bracket(concat)
     case 'Obj' :
       concat = deEntries(Object.entries(node), l, r)
-      return `{${concat}}`
+      return brace(concat)
     case 'Map':
       concat = deEntries([...node.entries()], l, r)
-      return `[${concat}]`
+      return bracket(concat)
     case 'Fun' :
       concat = `${node}`
       return concat.startsWith('function') ? concat.slice(9) : concat
@@ -37,6 +73,8 @@ function deNode (node, l = 0) {
       return `${node}`
   }
 }
+
+const targets = ['object', 'function']
 
 /**
  *
@@ -68,19 +106,19 @@ function deNode2 (node, l = 0) {
   }
 }
 
-let deEntries = function (entries, l, rn) {
+let deEntries = (entries, l, rn) => {
   const tEntries = entries.map(([k, v]) => [`${k}`, v])
-  const max = Math.max(...tEntries.map(([k]) => k.length))
+  const max = Math.max(...tEntries.map(([k]) => stringLength(k)))
   const points = tEntries
-    .map(([k, v]) => `${k.padEnd(max, ' ')}: ${deNode(v, l + 1)}`)
+    .map(([k, v]) => `${chalk.hex(pal.idx)(k.padEnd(max, ' '))}: ${deNode(v, l + 1)}`)
   return points.length > 1
     ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
     : points.join(',')
 }
 
-let deList = function (arr, l, rn) {
+let deList = (arr, l, rn) => {
   const points = arr.map(it => deNode(it, l + 1))
-  return points.reduce((a, b) => a + b, 0).toString().length > 36
+  return stringLength(points.reduce((a, b) => a + b, 0).toString()) > 36
     ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
     : points.join(',')
 }

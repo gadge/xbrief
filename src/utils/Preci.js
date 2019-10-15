@@ -3,10 +3,12 @@ export class Preci {
    *
    * @param {*[]|null} head
    * @param {*[]|null} tail
+   * @param {boolean|null}  dash
    */
-  constructor (head, tail) {
+  constructor (head, tail, dash = true) {
     this.head = head
     this.tail = tail
+    this.dash = dash
   }
 
   /**
@@ -17,21 +19,19 @@ export class Preci {
    * @return {Preci}
    */
   static fromArr (arr, head, tail) {
-    // let [h, tailCount] = Array.isArray(arr) && !!arr.length
-    //   ? head > 0 && tail > 0 && (head + tail < arr.length)
-    //     ? [arr.slice(0, head), arr.slice(-tail)]
-    //     : [arr, null]
-    //   : [null, null]
-    let [h, t] = !!arr && !!arr.length
-      ? !!head && head > 0 && head <= arr.length
-        ? !!tail && tail > 0 && tail <= arr.length
-          ? [arr.slice(0, head), arr.slice(-tail)]
-          : [arr.slice(0, head), null]
-        : !!tail && tail > 0 && tail <= arr.length
-          ? [null, arr.slice(-tail)]
-          : [arr, null]
-      : [null, null]
-    return new Preci(h, t)
+    if (!arr) return new Preci(null, null, false)
+    const { length } = arr
+    if (!length) return new Preci(null, null, false)
+    let [h, t, d] = !head || (head >= length)
+      ? !tail || (tail >= length)
+        ? [arr.slice(), null, false]
+        : [null, arr.slice(-tail), true]
+      : !tail || (tail >= length)
+        ? [arr.slice(0, head), null, true]
+        : ((head + tail) < length)
+          ? [arr.slice(0, head), arr.slice(-tail), true]
+          : [arr.slice(0, head), arr.slice(-1), true]
+    return new Preci(h, t, d)
   }
 
   /**
@@ -40,48 +40,28 @@ export class Preci {
    * @return {*[]}
    */
   toList (element = undefined) {
-    return !!this.head
-      ? !!this.tail
-        ? !!element
-          ? [...this.head, element, ...this.tail]
-          : [...this.head, ...this.tail]
-        : [...this.head]
-      : !!this.tail
-        ? [...this.tail]
-        : []
-  }
-
-  /**
-   *
-   * @param {*[]}elements
-   * @return {*[]}
-   */
-  fillSomeToList (elements) {
-    return !!this.head
-      ? !!this.tail
-        ? [...this.head, ...elements, ...this.tail]
-        : [...this.head]
-      : !!this.tail
-        ? [...this.tail]
-        : []
+    const arr = []
+    if (!!this.head) arr.push(...this.head)
+    if (this.dash && !!element) arr.push(element)
+    if (!!this.tail) arr.push(...this.tail)
+    return arr
   }
 
   jectHead (ject) {
-    this.head = !!this.head && !!ject
-      ? ject(this.head)
-      : this.head
+    if (!ject || !this.head) return this
+    this.head = ject(this.head)
     return this
   }
 
   jectTail (ject) {
-    this.tail = !!this.tail && !!ject
-      ? ject(this.tail)
-      : this.tail
+    if (!ject || !this.tail) return this
+    this.tail = ject(this.tail)
     return this
   }
 
   ject (ject, jectTail = undefined) {
-    return this.jectHead(ject).jectTail(!!jectTail ? jectTail : ject)
+    jectTail = jectTail || ject
+    return this.jectHead(ject).jectTail(jectTail)
   }
 
   /**
@@ -91,24 +71,13 @@ export class Preci {
    * @return {Preci}
    */
   map (abstract, abstractTail) {
-    const head = !!this.head && !!abstract
-      ? this.head.map(abstract)
-      : this.head
-    const tail = !!this.tail
-      ? !!abstractTail
-        ? this.tail.map(abstractTail)
-        : !!abstract
-          ? this.tail.map(abstract)
-          : this.tail
-      : this.tail
-    return new Preci(head, tail)
+    if (!abstract) return this
+    abstractTail = abstractTail || abstract
+    const
+      head = !!this.head ? this.head.map(abstract) : this.head,
+      tail = !!this.tail ? this.tail.map(abstractTail) : this.tail
+    return new Preci(head, tail, this.dash)
   }
-
-  // vehoCol (abstract) {
-  //   const list = this.toList()
-  //   const columnIndexes = [...list[0].keys()]
-  //   const cols = columnIndexes.
-  // }
 
   stringify () {
     return this.map(x => `${x}`)

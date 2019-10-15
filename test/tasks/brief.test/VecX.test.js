@@ -27,7 +27,7 @@ const paramSet = [
   {},
   {
     delimiter: '|',
-    abstract: (x) => Str.jv2py(`${x}`),
+    abstract: (x) => StrX.jv2py(`${x}`),
     head: 2,
     tail: 1
   },
@@ -47,7 +47,7 @@ const paramSet = [
   }
 ]
 
-class TestVecX {
+class VecXTest {
   static determineArray () {
     const candidates = [
       null,
@@ -58,7 +58,7 @@ class TestVecX {
       new Set([1, 2, 3, 2, 1]),
       { 1: 'a', 2: 'b', 3: 'c' }
     ]
-    GP.now().tag(`${TestVecX.name}.${TestVecX.determineArray.name}`).wL()
+    GP.now().tag(`${VecXTest.name}.${VecXTest.determineArray.name}`).wL()
     for (let [i, candidate] of candidates.entries()) {
       `${i}`.tag('isArray and length').wL()
       console.log(candidate);
@@ -69,7 +69,7 @@ class TestVecX {
   }
 
   static hBriefTest () {
-    ''.tag(`${TestVecX.name}.${TestVecX.hBriefTest.name}`).wL()
+    ''.tag(`${VecXTest.name}.${VecXTest.hBriefTest.name}`).wL()
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
@@ -80,7 +80,7 @@ class TestVecX {
   }
 
   static vBriefTest () {
-    ''.tag(`${TestVecX.name}.${TestVecX.vBriefTest.name}`).wL()
+    ''.tag(`${VecXTest.name}.${VecXTest.vBriefTest.name}`).wL()
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
@@ -97,8 +97,8 @@ class TestVecX {
 }
 
 test('ArrayTest.vBriefTest', () => {
-  TestVecX.vBriefTest()
+  VecXTest.vBriefTest()
   // expect(sum(1, 2)).toBe(3);
 })
 
-export { TestVecX }
+export { VecXTest }

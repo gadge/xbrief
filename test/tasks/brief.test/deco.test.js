@@ -56,9 +56,9 @@ class DecoTest {
   }
 }
 
-test('deco test', () => {
-  DecoTest.decoTest()
-})
+// it('deco test', () => {
+//   DecoTest.decoTest()
+// })
 
 export { DecoTest }
 

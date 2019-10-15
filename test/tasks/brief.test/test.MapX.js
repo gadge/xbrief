@@ -1,5 +1,5 @@
 import { superlativeTrees } from '../../asset/superlativTrees.json'
-import { deco, MapX } from '../../../dist/index.esm'
+import { deco, MapX } from '../../../src/index'
 import { GP } from 'elprimero'
 
 const mapSet = {
@@ -19,10 +19,19 @@ const paramSet = {
   basic: {
     abstract: undefined,
     delimiter: ',',
+  },
+  headOnly: {
+    abstract: undefined,
+    delimiter: ',',
+    head: 3
+  },
+  tailOnly: {
+    abstract: undefined,
+    delimiter: ',',
     head: 0,
     tail: 1,
   },
-  take5: {
+  headTail: {
     abstract: null,
     delimiter: ',',
     head: 2,
@@ -59,6 +68,12 @@ class TestMapX {
     }
   }
 }
+
+describe('MapX test', function () {
+  it('Test Map X: v Brief Test ', () => {
+    TestMapX.vBriefTest()
+  })
+})
 
 export {
   TestMapX

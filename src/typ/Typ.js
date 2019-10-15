@@ -18,7 +18,7 @@
 //   }
 // };
 
-const oc = Object.prototype.toString
+const _oc = Object.prototype.toString
 
 /**
  * const rxObj = /^\[object (.*)]$/
@@ -26,9 +26,11 @@ const oc = Object.prototype.toString
  * @param {*} o
  * @return {string}
  */
-function otype (o) {
-  return oc.call(o).slice(8, -1)
+function _otype (o) {
+  return _oc.call(o).slice(8, -1)
 }
+
+const _isStrNum = x => !!(+x) || parseFloat(x) === 0
 
 class Typ {
   /**
@@ -38,22 +40,27 @@ class Typ {
    * @returns {string} Inferred typ in [object "Type"] form.
    */
   static protoType (o) {
-    return oc.call(o)
+    return _oc.call(o)
+  }
+
+  static initial (o) {
+    return _oc.call(o).slice(8, 11)
   }
 
   static infer (o) {
     const raw = typeof o
-    return raw !== 'object'
-      ? raw
-      : otype(o).toLowerCase()
+    return raw !== 'object' ? raw : _otype(o).toLowerCase()
   }
 
-  static initial (o) {
-    return oc.call(o).slice(8, 11)
-  }
-
-  static isNum (x) {
-    return typeof x === 'number'
+  /**
+   *
+   * @param {*} o
+   * @return {string}
+   */
+  static inferData (o) {
+    return (typeof o === 'string')
+      ? _isStrNum(o) ? 'numstr' : 'string'
+      : _otype(o).toLowerCase()
   }
 
 // Angular 4.3
@@ -73,7 +80,7 @@ class Typ {
   static check (x) {
     return {
       typeOf: typeof x,
-      protoType: oc.call(x),
+      protoType: _oc.call(x),
       stringify: `${x}`,
     }
   }

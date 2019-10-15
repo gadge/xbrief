@@ -10,14 +10,14 @@
 //
 // StringTest.test()
 
-// import { ArrayTest } from './brief.test/array.test'
-//
-// // ArrayTest.hBriefTest()
-// ArrayTest.vBriefTest()
-//
-import { TestMapX } from './tasks/brief.test/test.MapX'
+import { ArrayBriefTest } from './tasks/brief.test/array.brief.test'
 
-TestMapX.hBriefTest()
+// ArrayTest.hBriefTest()
+ArrayBriefTest.test()
+//
+// import { TestMapX } from './tasks/brief.test/test.MapX'
+//
+// TestMapX.hBriefTest()
 //
 // import { TestMatX } from './tasks/brief.test/test.MatX'
 //

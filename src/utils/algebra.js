@@ -3,12 +3,11 @@
  * @param {*[][]} mx
  * @returns {number[]}
  */
-export function columnKeys (mx) {
-  return !!mx && mx.length
-    ? !!mx[0]
-      ? mx[0].map((_, i) => i)
-      : []
-    : []
+export function colIndexes (mx) {
+  if (!mx || !mx.length) return []
+  const [x] = mx
+  if (!x) return []
+  return x.map((_, i) => i)
 }
 
 /**
@@ -17,7 +16,7 @@ export function columnKeys (mx) {
  * @returns {*[][]}
  */
 export function transpose (mx) {
-  return columnKeys(mx).map(c => mx.map(r => r[c]))
+  return colIndexes(mx).map(n => mx.map(r => r[n]))
 }
 
 /**
@@ -29,9 +28,7 @@ export function transpose (mx) {
  */
 export function zip (a, b, zipper) {
   const { length } = a, arr = Array(length)
-  for (let [i, el] of a.entries()) {
-    arr[i] = zipper(el, b[i], i)
-  }
+  for (let [i, el] of a.entries()) arr[i] = zipper(el, b[i], i)
   return arr
   // return Array.from({ length: size }, (v, i) => zipper(vec[i], another[i], i))
   // return vec.map((x, i) => zipper(x, another[i]))

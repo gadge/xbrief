@@ -1,10 +1,9 @@
 {
   "name": "xbrief",
-  "version": "0.1.36",
+  "version": "0.1.46",
   "description": "A light and simple console debug tool.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js",
   "files": [
     "dist"
   ],
@@ -16,10 +15,15 @@
     "prepare": "npm run build-rollup",
     "gulp-uglify": "gulp script",
     "publish": "npm publish",
-    "test": "node test/utils/test-main.js -r @babel/register",
-    "test-jest": "jest"
+    "test-babel": "node test/utils/test-main.js",
+    "test": "mocha -r @babel/register"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "has-ansi": "^4.0.0",
+    "string-length": "^3.1.0",
+    "spettro": "^0.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
@@ -31,17 +35,19 @@
     "@babel/runtime": "^7.6.0",
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
-    "elprimero": "^0.0.18",
-    "funfact": "^0.0.1",
+    "borel": "^0.1.0",
+    "crostab": "^0.1.32",
+    "elprimero": "^0.0.20",
+    "funfact": "^0.0.2",
     "gulp": "^4.0.2",
     "gulp-uglify": "^3.0.2",
-    "jest": "^24.9.0",
+    "mocha": "^6.2.1",
     "rollup": "^1.21.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.2",
-    "veho": "^0.1.19",
+    "veho": "^0.1.21",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
   },

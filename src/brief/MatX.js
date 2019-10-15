@@ -1,8 +1,8 @@
-import { rn } from '../utils/clay'
+import { rn } from '../utils/str'
 import { Typ } from '../typ/Typ'
 import { Preci } from '../utils/Preci'
 import { VecX } from '../brief/VecX'
-import { columnKeys } from '../utils/algebra'
+import { colIndexes } from '../utils/algebra'
 
 class MatX {
   /**
@@ -26,13 +26,13 @@ class MatX {
       .map(
         row => Preci
           .fromArr(row, columns.head, columns.tail)
-          .map(!!abstract ? abstract : x => `${x}`)
+          .map(abstract || (x => `${x}`))
           .toList('...')
       )
-    const cKeys = columnKeys(rowsPreci.toList())
+    const cKeys = colIndexes(rowsPreci.toList())
     const rowList = rowsPreci.toList(cKeys.map(_ => '..'))
     const columnList = cKeys.map(c => rowList.map(row => row[c]))
-    const pads = columnList.map(VecX.maxLength)
+    const pads = columnList.map(VecX.maxAnsiLen)
     let lines = rowList.map((row) =>
       row.map((x, i) => Typ.isNumeric(x)
         ? (x).padStart(pads[i])
