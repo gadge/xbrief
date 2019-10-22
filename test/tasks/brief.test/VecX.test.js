@@ -1,4 +1,4 @@
-import { StrX, VecX } from '../../../src/index'
+import { StrX, ArrX } from '../../../src/index'
 import { GP } from 'elprimero'
 
 const superlativeTrees = {
@@ -73,7 +73,7 @@ class VecXTest {
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
-        `    ${key}`.tag(VecX.hBrief.call(null, arr, param)).wL()
+        `    ${key}`.tag(ArrX.hBrief.call(null, arr, param)).wL()
       }
       ''.wL()
     }
@@ -84,7 +84,7 @@ class VecXTest {
     for (let [i, param] of paramSet.entries()) {
       `  ${i}`.tag(JSON.stringify(param)).wL()
       for (let [key, arr] of Object.entries(arrSet)) {
-        `    ${key}`.tag(VecX.vBrief.call(null, arr, param)).wL()
+        `    ${key}`.tag(ArrX.vBrief.call(null, arr, param)).wL()
       }
       ''.wL()
     }
@@ -92,7 +92,7 @@ class VecXTest {
 
   static vBriefTestParam () {
     const trees = Object.keys(superlativeTrees).map(name => name|>StrX.jv2py)
-    'trees'.tag(VecX.vBrief(trees, { abstract: it => `${it}` })).wL()
+    'trees'.tag(ArrX.vBrief(trees, { abstract: it => `${it}` })).wL()
   }
 }
 

@@ -1,3 +1,5 @@
+import { totx } from './str'
+
 export class Preci {
   /**
    *
@@ -21,65 +23,64 @@ export class Preci {
   static fromArr (arr, head, tail) {
     if (!arr) return new Preci(null, null, false)
     const { length } = arr
-    if (!length) return new Preci(null, null, false)
-    let [h, t, d] = !head || (head >= length)
-      ? !tail || (tail >= length)
-        ? [arr.slice(), null, false]
-        : [null, arr.slice(-tail), true]
-      : !tail || (tail >= length)
-        ? [arr.slice(0, head), null, true]
-        : ((head + tail) < length)
-          ? [arr.slice(0, head), arr.slice(-tail), true]
-          : [arr.slice(0, head), arr.slice(-1), true]
-    return new Preci(h, t, d)
+    switch (true) {
+      case !length :
+        return new Preci(null, null, false)
+      case !head || head >= length :
+        return new Preci(arr.slice(), null, false)
+      case !tail || tail >= length :
+        return new Preci(arr.slice(0, head), null, true)
+      case head + tail < length :
+        return new Preci(arr.slice(0, head), arr.slice(-tail), true)
+      default:
+        return new Preci(arr.slice(0, head), arr.slice(-1), true)
+    }
   }
 
   /**
    *
-   * @param {*}element
+   * @param {*} [el] - the element to be inserted between head and tail
    * @return {*[]}
    */
-  toList (element = undefined) {
+  toList (el) {
     const arr = []
     if (!!this.head) arr.push(...this.head)
-    if (this.dash && !!element) arr.push(element)
+    if (this.dash && !!el) arr.push(el)
     if (!!this.tail) arr.push(...this.tail)
     return arr
   }
 
-  jectHead (ject) {
-    if (!ject || !this.head) return this
-    this.head = ject(this.head)
+  jectHead (fn) {
+    if (!fn || !this.head) return this
+    this.head = fn(this.head)
     return this
   }
 
-  jectTail (ject) {
-    if (!ject || !this.tail) return this
-    this.tail = ject(this.tail)
+  jectTail (fn) {
+    if (!fn || !this.tail) return this
+    this.tail = fn(this.tail)
     return this
   }
 
-  ject (ject, jectTail = undefined) {
-    jectTail = jectTail || ject
-    return this.jectHead(ject).jectTail(jectTail)
+  ject (fn, tailFn = undefined) {
+    return this.jectHead(fn).jectTail(tailFn || fn)
   }
 
   /**
    *
-   * @param {?function} abstract
-   * @param {?function} [abstractTail]
+   * @param {?function} fn
+   * @param {?function} [tailFn]
    * @return {Preci}
    */
-  map (abstract, abstractTail) {
-    if (!abstract) return this
-    abstractTail = abstractTail || abstract
+  map (fn, tailFn) {
+    if (!fn) return this
     const
-      head = !!this.head ? this.head.map(abstract) : this.head,
-      tail = !!this.tail ? this.tail.map(abstractTail) : this.tail
+      head = !!this.head ? this.head.map(fn) : this.head,
+      tail = !!this.tail ? this.tail.map(tailFn || fn) : this.tail
     return new Preci(head, tail, this.dash)
   }
 
   stringify () {
-    return this.map(x => `${x}`)
+    return this.map(totx)
   }
 }

@@ -3,7 +3,13 @@ import { MatX, StrX } from '../../../src'
 // import { GP, Chrono } from 'elprimero'
 
 const matrixSet = {
-  nullMatrix: [[]],
+  empty_matrix: [[]],
+  one_row_matrix: [[1, 2, 3, 4, 5]],
+  matrix_lack: [
+    [1, , 3, 4, 5],
+    [1, 2, , 4, 5],
+    [1, 2, 3, , 5],
+  ],
   simpleMatrix: [
     [5, 2, 0, 1],
     [3, 3, 2, 5],
@@ -11,7 +17,6 @@ const matrixSet = {
     [6, 4, 4, 0]
   ],
   boxOffice: boxoffice.map(row => [...Object.values(row)])
-
 }
 
 const paramSet = {
@@ -83,9 +88,9 @@ const paramSet = {
 //   // expect(sum(1, 2)).toBe(3);
 // })
 
-export class TestMatX {
+export class MatXTest {
   static xBriefTest () {
-    ''.tag(`${TestMatX.name}.${TestMatX.xBriefTest.name}`).wL()
+    ''.tag(`${MatXTest.name}.${MatXTest.xBriefTest.name}`).wL()
     for (let [paramName, param] of Object.entries(paramSet)) {
       `  ${paramName}`.tag(JSON.stringify(param)).wL()
       for (let [key, matrix] of Object.entries(matrixSet)) {
@@ -102,28 +107,11 @@ export class TestMatX {
       }
     )
   }
-
-  // static test () {
-  //   const matrix = boxoffice.map(jso => Object.values(jso).slice(0, 6))
-  //
-  //   const funcSet = {
-  //     'boxoffice': () => {
-  //       return MatX.xBrief(matrix, (x) => Typ.isNumeric(x) ? x : `"${x}"`, 5)
-  //     },
-  //     'empty matrix': () => {
-  //       return MatX.xBrief([[]], (x) => Typ.isNumeric(x) ? x : `"${x}"`)
-  //     }
-  //   }
-  //
-  //   for (let [k, v] of Object.entries(funcSet)) {
-  //     GP.now().tag(k).wL()
-  //     '  brief'.tag(v.call()).wL()
-  //   }
-  //   ''.wL()
-  //   'Chrono'.wL()
-  //   Chrono.compareFuncsByRepeats([1, 100, 10000], funcSet).brief().wL()
-  //   ''.wL()
-  //   // console.log(matrix)
-  // }
-
 }
+
+// describe('Mat X Test', function () {
+//   this.timeout(1000 * 60)
+//   it('Mat X Test: x Brief Test ', () => {
+//     MatXTest.xBriefTest()
+//   })
+// })

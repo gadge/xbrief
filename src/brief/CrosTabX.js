@@ -1,48 +1,50 @@
 import { Preci } from '../utils/Preci'
-import { tx } from '../utils/str'
+import { totx } from '../utils/str'
 import { zip } from '../utils/algebra'
-import { TabX } from './TabX'
+import { TableX } from './TableX'
 
 /**
  * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
- * @param {[function(*):string]} [abstract]
+ * @param {?function(*):string} [abstract]
+ * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
  * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
- * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [matrix]
  * @return {{head:string[],rows:string[][]}}
  */
-function _preci (crosTab, {
+function _preci (crosTab,
+  {
     abstract,
-    side = {
-      abstract: undefined,
+    side: _s = {
+      abstract,
       head: 0,
       tail: 0
     },
-    banner = {
-      abstract: undefined,
+    banner: _b = {
+      abstract,
       head: 0,
       tail: 0
     },
   } = {}
 ) {
-  const sideTaken = Preci
-    .fromArr(crosTab.side, side.head, side.tail)
-    .map(!!side.abstract ? side.abstract : tx)
-    .toList('..')
-  const head = Preci
-    .fromArr(crosTab.banner, banner.head, banner.tail)
-    .map(!!banner.abstract ? banner.abstract : tx)
-    .toList('..')
-  const matrixAbstract = !!abstract ? abstract : tx
-  const rows = Preci
-    .fromArr(crosTab.matrix, side.head, side.tail)
-    .map(row => Preci
-      .fromArr(row, banner.head, banner.tail)
-      .map(matrixAbstract)
-      .toList('..')
-    )
-    .toList(head.map(_ => '..'));
-  (!!crosTab.title ? crosTab.title : '') |> head.unshift
-  zip(sideTaken, rows, (side, row) => side |> row.unshift)
+  abstract = abstract || totx
+  const
+    side = Preci
+      .fromArr(crosTab.side, _s.head, _s.tail)
+      .map(_s.abstract || totx)
+      .toList('..'),
+    head = Preci
+      .fromArr(crosTab.banner, _b.head, _b.tail)
+      .map(_b.abstract || totx)
+      .toList('..'),
+    rows = Preci
+      .fromArr(crosTab.matrix, _s.head, _s.tail)
+      .map(row => Preci
+        .fromArr(row, _b.head, _b.tail)
+        .map(abstract)
+        .toList('..')
+      )
+      .toList(head.map(_ => '..'))
+  head.unshift(crosTab.title || '')
+  zip(side, rows, (s, row) => row.unshift(s))
   return { head, rows }
 }
 
@@ -50,28 +52,31 @@ class CrosTabX {
   /**
    *
    * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
-   * @param {[function(*):string]} [abstract]
+   * @param {?function(*):string} [abstract]
    * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
    * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
+   * @param {boolean} [ansi=false]
    * @param {boolean} [chinese=false]
    * @return {string}
    */
-  static brief (crosTab, {
-    abstract,
-    side = {
-      abstract: undefined,
-      head: 0,
-      tail: 0
-    },
-    banner = {
-      abstract: undefined,
-      head: 0,
-      tail: 0
-    },
-    chinese = false
-  } = {}) {
+  static brief (crosTab,
+    {
+      abstract,
+      side = {
+        abstract,
+        head: 0,
+        tail: 0
+      },
+      banner = {
+        abstract,
+        head: 0,
+        tail: 0
+      },
+      ansi = false,
+      chinese = false
+    } = {}) {
     const { head, rows } = _preci(crosTab, { abstract, side, banner })
-    return TabX.brief({ head, rows }, { chinese })
+    return TableX.brief({ head, rows }, { chinese, ansi })
   }
 }
 

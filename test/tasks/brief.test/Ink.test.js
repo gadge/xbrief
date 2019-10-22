@@ -11,5 +11,5 @@ it('X: ini Fun ', () => {
     .line('Subheader Beta', 'blah blah').pline('   to be continued...', '...', '...')
     .tx |> console.log
 
-  Xr().p('start').increaseIndent().tag(1, 2, 3, 4, 5).p(6, 7).line(8, 9, 10).pline(10, NaN, undefined).tx |> console.log
+  Xr('   ').p('start').increaseIndent().tag(1, 2, 3, 4, 5).p(6, 7).line(8, 9, 10).pline(10, NaN, undefined).tx |> console.log
 })

@@ -1,8 +1,23 @@
+import hasAnsi from 'has-ansi'
+import stringLength from 'string-length'
+
 const rn = '\r\n'
 const tb = '  '
 const aeu = '(Ø)'
+const zhChars = {
+  dash: '－',
+  space: '　'
+}
 
 const noop = () => {}
+
+const lpad = (tx, len, fill, ansi = false) => ansi && hasAnsi(tx)
+  ? tx.padStart(tx.length + len - stringLength(tx), fill)
+  : tx.padStart(len, fill)
+
+const rpad = (tx, len, fill, ansi = false) => ansi && hasAnsi(tx)
+  ? tx.padEnd(tx.length + len - stringLength(tx), fill)
+  : tx.padEnd(len, fill)
 
 const isTab = (c) => c === '\t' || c === ' '
 const indexNaTab = (tx) => {
@@ -23,14 +38,17 @@ const tabify = (tx) => {
  * @param {*} x
  * @return {string}
  */
-const tx = x => `${x}`
+const totx = x => `${x}`
 
 export {
   rn,
   tb,
   aeu,
+  zhChars,
   noop,
-  tx,
+  totx,
+  lpad,
+  rpad,
   isTab,
   indexNaTab,
   beforeNaTab,

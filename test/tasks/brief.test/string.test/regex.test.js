@@ -1,4 +1,4 @@
-import { deco, StrX, VecX } from '../../../../src'
+import { deco, StrX, ArrX } from '../../../../src'
 import { GP } from 'elprimero'
 
 export class RegexTest {
@@ -15,9 +15,9 @@ export class RegexTest {
     for (let [k, regExp] of regExps.entries()) {
       `${k}`.tag(regExp).wL()
       let matches = sentence.match(regExp)
-      GP.now().tag('match').tag(VecX.vBrief(matches || [])).wL()
+      GP.now().tag('match').tag(ArrX.vBrief(matches || [])).wL()
       let splits = sentence.split(regExp)
-      GP.now().tag('split').tag(VecX.vBrief(splits || [])).wL()
+      GP.now().tag('split').tag(ArrX.vBrief(splits || [])).wL()
       StrX.wL()
     }
 
@@ -34,7 +34,7 @@ export class RegexTest {
     let approach = (tx, lifb = 0, fibb = 0) => {
       let y = tx.lastIndexOf(')', fibb)
       let x = y > 0 ? tx.lastIndexOf('(', y) : -1
-      VecX.hBrief([x, y]).wL()
+      ArrX.hBrief([x, y]).wL()
       return {
         x,
         y,

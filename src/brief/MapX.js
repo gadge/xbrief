@@ -1,7 +1,7 @@
 import { rn, aeu } from '../utils/str'
 import { Preci } from '../utils/Preci'
 import { EntX } from './EntX'
-import { VecX } from './VecX'
+import { ArrX } from './ArrX'
 
 class MapX {
   /**
@@ -48,7 +48,7 @@ class MapX {
     const preci = Preci
       .fromArr([...dict.entries()], head, tail)
       .map(textAbstract)
-    const pad = VecX.maxAnsiLen(preci.toList().map(([k]) => k))
+    const pad = ArrX.maxLen(preci.toList().map(([k]) => k))
     const elements = preci
       .map(it => EntX.briefPadded(it, pad))
       .toList('...'.padStart(pad))

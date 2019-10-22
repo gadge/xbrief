@@ -13,14 +13,14 @@ Number.prototype.tag = function (val) {
 }
 
 export { StrX }
+export { totx } from './utils/str'
 export { Xr, Ink } from './brief/Ink'
-export { VecX } from './brief/VecX'
+export { ArrX } from './brief/ArrX'
 export { MatX } from './brief/MatX'
 export { MapX } from './brief/MapX'
-export { TabX } from './brief/TabX'
+export { TableX } from './brief/TableX'
 export { CrosTabX } from './brief/CrosTabX'
 export { deco } from './brief/deco'
-export { Typ } from './typ/Typ'
 export { MoneyForm, PercentForm, MagnitudeForm, toPercent } from './formos/form'
 export { noop } from './utils/str'
 export { Preci } from './utils/Preci'

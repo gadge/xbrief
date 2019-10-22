@@ -1,24 +1,25 @@
 import nbaPlayers from 'funfact/dist/data/nba/players'
-import { CrosTabX, TabX } from '../../../src'
+import { CrosTabX, TableX, totx } from '../../../src'
 import chalk from 'chalk'
 import { palette } from 'spettro'
 
 class TabXTest {
 
-  static test () {
+  static testSimpleCrosTab () {
     const { head, rows } = nbaPlayers
     'nbaPlayers' |> console.log
     '' |> console.log
 
-    TabX.brief(
+    TableX.brief(
       { head, rows },
       {
-        matrix: {
+        rows: {
           head: 10, tail: 2
         },
-        banner: {
+        head: {
           head: 10, tail: 2
-        }
+        },
+        ansi: true,
       }) |> console.log
     '' |> console.log
 
@@ -31,8 +32,10 @@ class TabXTest {
     CrosTabX.brief(
       { side, banner, matrix },
       {
+        abstract: totx,
         side: { head: 2, tail: 1 },
-        banner: { head: 3, tail: 1 }
+        banner: { head: 3, tail: 1 },
+        ansi: true
       }) |> console.log
   }
 
@@ -42,18 +45,22 @@ class TabXTest {
       matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
     }
     matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
-    TabX.brief(
+    TableX.brief(
       { banner, matrix },
       {
-        banner: { head: 2, tail: 1 },
-        matrix: { head: 2, tail: 1 }
+        head: { head: 2, tail: 1 },
+        rows: { head: 2, tail: 1 },
+        ansi: true
       }) |> console.log
 
   }
 }
 
-it('TabXTest test', () => {
-  TabXTest.testSimpleTable()
+describe('Tab X Test', function () {
+  this.timeout(1000 * 60)
+  it('Tab X Test: test Simple Cros Tab ', () => {
+    TabXTest.testSimpleCrosTab()
+  })
 })
 
 export {

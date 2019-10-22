@@ -1,7 +1,7 @@
 import { tb, rn } from '../utils/str'
-import { Typ } from '../typ/Typ'
+import { Typ } from 'typen'
 import chalk from 'chalk'
-import { palette } from 'spettro'
+import { palette, greys } from 'spettro'
 import stringLength from 'string-length'
 
 let deco = function (obj) {
@@ -11,11 +11,12 @@ let deco = function (obj) {
 const
   _o = 'object',
   _f = 'function',
-  isSimple = (x) => !x || typeof x !== _o && typeof x !== _f
+  isSimple = (x) => !x || typeof x !== _o && typeof x !== _f,
+  { initial } = Typ
 
 const
   pal = {
-    idx: palette.brown.lighten_4,
+    idx: greys.brown.lighten_4,
     str: palette.lightGreen.accent_2,
     num: palette.deepOrange.accent_2,
     udf: palette.deepPurple.accent_2,
@@ -52,8 +53,7 @@ const brace = content => chalk.hex(pal.brc)('{') + content + chalk.hex(pal.brc)(
 
 function deJson (node, l = 0) {
   let [r, concat] = [rn + tb.repeat(l), '']
-  const typ = Typ.initial(node)
-  switch (typ) {
+  switch (initial(node)) {
     case 'Arr':
       concat = deList(node, l, r)
       return bracket(concat)

@@ -1,6 +1,6 @@
 import { StrX } from '../../../../src/brief/StrX'
 import { Dic } from 'veho'
-import { TabX } from '../../../../src/brief/TabX'
+import { TableX } from '../../../../src/brief/TableX'
 import { transpose } from '../../../../src/utils/algebra'
 
 class ChnEngTransTest {
@@ -23,7 +23,7 @@ class ChnEngTransTest {
       rows: transpose([chns, engs, chn_codes, eng_codes])
     }
     'table' |> console.log
-    TabX.brief(table, { chinese: true }) |> console.log
+    TableX.brief(table, { chinese: true }) |> console.log
   }
 
 }

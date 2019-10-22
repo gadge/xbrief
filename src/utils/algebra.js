@@ -3,7 +3,7 @@
  * @param {*[][]} mx
  * @returns {number[]}
  */
-export function colIndexes (mx) {
+export function coins (mx) {
   if (!mx || !mx.length) return []
   const [x] = mx
   if (!x) return []
@@ -16,7 +16,7 @@ export function colIndexes (mx) {
  * @returns {*[][]}
  */
 export function transpose (mx) {
-  return colIndexes(mx).map(n => mx.map(r => r[n]))
+  return coins(mx).map(n => mx.map(r => r[n]))
 }
 
 /**
@@ -28,7 +28,7 @@ export function transpose (mx) {
  */
 export function zip (a, b, zipper) {
   const { length } = a, arr = Array(length)
-  for (let [i, el] of a.entries()) arr[i] = zipper(el, b[i], i)
+  for (let i = 0; i < length; i++) arr[i] = zipper(a[i], b[i], i)
   return arr
   // return Array.from({ length: size }, (v, i) => zipper(vec[i], another[i], i))
   // return vec.map((x, i) => zipper(x, another[i]))

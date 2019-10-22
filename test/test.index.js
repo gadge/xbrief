@@ -10,18 +10,18 @@
 //
 // StringTest.test()
 
-import { ArrayBriefTest } from './tasks/brief.test/array.brief.test'
-
-// ArrayTest.hBriefTest()
-ArrayBriefTest.test()
+// import { ArrayBriefTest } from './tasks/brief.test/array.brief.test'
 //
+// // ArrayTest.hBriefTest()
+// ArrayBriefTest.test()
+
 // import { TestMapX } from './tasks/brief.test/test.MapX'
 //
 // TestMapX.hBriefTest()
-//
-// import { TestMatX } from './tasks/brief.test/test.MatX'
-//
-// TestMatX.xBriefTest()
+
+import { MatXTest } from './tasks/brief.test/MatX.test'
+
+MatXTest.xBriefTest()
 
 // import { TabXTest } from './tasks/brief.test/TabX.test'
 //

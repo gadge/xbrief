@@ -1,6 +1,6 @@
 import * as chalk from 'chalk'
 import stringLength from 'string-length'
-import { VecX } from '../../../src/brief/VecX'
+import { ArrX } from '../../../src/brief/ArrX'
 import { StrX } from '../../../src/brief/StrX'
 
 describe('Test padStart concerning Ansi', function () {
@@ -16,7 +16,7 @@ describe('Test padStart concerning Ansi', function () {
       nest_style: (chalk.red('Hello', chalk.underline.bgBlue('world') + '!')),
       nest_even: (chalk.green(`A green ${chalk.blue.underline.bold('Shakespare')} emerged.`))
     }
-    const maxLen = VecX.maxAnsiLen(Object.values(candidates))
+    const maxLen = ArrX.maxLen(Object.values(candidates))
     'maxLen'.tag(maxLen) |> console.log
     '' |> console.log
     for (let [name, text] of Object.entries(candidates)) {
@@ -24,7 +24,7 @@ describe('Test padStart concerning Ansi', function () {
     }
     '' |> console.log
     'Padded by maxLen' |> console.log
-    const nameLen = VecX.maxLength(Object.keys(candidates))
+    const nameLen = ArrX.maxLen(Object.keys(candidates))
     for (let [name, text] of Object.entries(candidates)) {
       name.padStart(nameLen).tag(text.padStart(text.length + maxLen - stringLength(text))) |> console.log
     }

@@ -1,6 +1,6 @@
 import { toraja } from 'funfact'
 import { Table, TabX } from 'crostab'
-import { VecX } from '../../../src/brief/VecX'
+import { ArrX } from '../../../src/brief/ArrX'
 
 export class VecXHeadTailTest {
   static test () {
@@ -29,7 +29,7 @@ export class VecXHeadTailTest {
     }
     for (let [name, { head, tail }] of Object.entries(paramsList)) {
       name |> console.log
-      VecX.vBrief(arr, { head, tail }) |> console.log
+      ArrX.vBrief(arr, { head, tail }) |> console.log
       '' |> console.log
     }
 

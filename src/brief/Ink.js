@@ -1,25 +1,20 @@
-import { indexNaTab, rn, tabify, tx } from '../utils/str'
+import { indexNaTab, rn, tabify, totx } from '../utils/str'
 
 export const Xr = (label, ...items) => new Ink(label, ...items)
 
 export class Ink {
   constructor (label, ...items) {
-    label = (label || '')|> tx
+    label = (label || '')|> totx
     const i = label |> indexNaTab
-    if (label.length) {
-      if (!!i) {
-        this.blocks = [label.substring(0, i)]
-        this.list = [`${label.substring(0, i)}[${label.substring(i)}]`]
-      } else {
-        this.blocks = []
-        this.list = [`[${label}]`]
-      }
+    if (!!i) {
+      const block = label.substring(0, i)
+      this.blocks = [block]
+      this.list = [block + (i < label.length ? `[${label.substring(i)}]` : '')]
     } else {
       this.blocks = []
-      this.list = []
+      this.list = label.length ? [`[${label}]`] : []
     }
-
-    if (items.length) this.list.push(`(${items.map(tx).join(',')})`)
+    if (items.length) this.list.push(`(${items.map(totx).join(',')})`)
   }
 
   get indent () {
@@ -45,24 +40,29 @@ export class Ink {
   }
 
   tag (key, ...items) {
-    this.list.push(key |> tx |> tabify)
-    if (items.length) this.list.push(`(${items.map(tx).join(',')})`)
+    this.list.push(key |> totx |> tabify)
+    if (items.length) this.list.push(`(${items.map(totx).join(',')})`)
     return this
   }
 
   line (key, ...items) {
-    this.list.push(rn + ((this.tabs + key)|> tx |> tabify))
-    if (items.length) this.list.push(`(${items.map(tx).join(',')})`)
+    this.list.push(rn + ((this.tabs + totx(key)) |> tabify))
+    if (items.length) this.list.push(`(${items.map(totx).join(',')})`)
+    return this
+  }
+
+  br (...items) {
+    if (items.length) this.list.push(items.map(x => `(${x})`).join(','))
     return this
   }
 
   p (...items) {
-    if (items.length) this.list.push(...items.map(tx))
+    if (items.length) this.list.push(...items.map(totx))
     return this
   }
 
   pline (...items) {
-    const lines = [rn, ...items.map(item => this.tabs + tx(item) + rn)]
+    const lines = [rn, ...items.map(item => this.tabs + totx(item) + rn)]
     if (items.length) this.list.push(...lines)
     return this
   }

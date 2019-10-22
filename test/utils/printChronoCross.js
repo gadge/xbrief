@@ -9,7 +9,6 @@ import { Stat } from 'borel'
 export const printChronoCross = ({ lapse, result, pipeline }) => {
   'lapse' |> console.log
   lapse
-    .unshiftRow(['avg'], lapse.columns.map(Stat.avg).map(it => it.toFixed()))
     .brief()
     |> console.log
   '' |> console.log

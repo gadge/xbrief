@@ -1,32 +1,32 @@
 import { superlativeTrees } from '../../asset/superlativTrees.json'
-import { VecX } from '../../../src/brief/VecX'
+import { ArrX } from '../../../src/brief/ArrX'
 
 const trees = Object.keys(superlativeTrees)
 
 test('padStarts test', () => {
   'I. padStarts' |> console.log
   '[1] no padWidths passed in' |> console.log
-  VecX.padStarts(trees) |> console.log
+  ArrX.padStarts(trees) |> console.log
 
   const len = 32;
   `[2] passed padWidths as a number: ${len}` |> console.log
-  VecX.padStarts(trees, 32) |> console.log
+  ArrX.padStarts(trees, 32) |> console.log
 
   const lens = [12, 24, 36, 48];
   `[3] passed padWidths as an Array<number>: [${lens}]` |> console.log
-  VecX.padStarts(trees, lens) |> console.log
+  ArrX.padStarts(trees, lens) |> console.log
 })
 
 test('padEnds test', () => {
   'I. padEnds' |> console.log
   '[1] no padWidths passed in' |> console.log
-  VecX.padEnds(trees) |> console.log
+  ArrX.padEnds(trees) |> console.log
 
   const len = 32;
   `[2] passed padWidths as a number: ${len}` |> console.log
-  VecX.padEnds(trees, 32) |> console.log
+  ArrX.padEnds(trees, 32) |> console.log
 
   const lens = [12, 24, 36, 48];
   `[3] passed padWidths as an Array<number>: [${lens}]` |> console.log
-  VecX.padEnds(trees, lens) |> console.log
+  ArrX.padEnds(trees, lens) |> console.log
 })

@@ -1,5 +1,5 @@
 import { Typ } from '../../../src/index'
-import { MapX } from '../../../src/brief/MapX'
+import { MapX } from '../../../src/brief/MpX'
 
 class TypTest {
   static simpleTest () {

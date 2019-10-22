@@ -1,4 +1,4 @@
-import { afterNaTab, indexNaTab, isTab, rn, tb } from '../utils/str'
+import { afterNaTab, endsBracs, indexNaTab, isTab, rn, tb } from '../utils/str'
 import hasAnsi from 'has-ansi'
 import stringLength from 'string-length'
 
@@ -29,10 +29,8 @@ class StrX {
   static py2jv (pyExp) {
     const matches = pyExp.match(StrReg.py2jv)
     return matches
-      ? [
-        matches[0].toLowerCase(),
-        ...matches.slice(1).map(wd => wd[0].toUpperCase() + wd.slice(1).toLowerCase())
-      ].join('')
+      ? matches[0].toLowerCase() + matches.slice(1)
+      .map(wd => wd[0].toUpperCase() + wd.slice(1).toLowerCase()).join()
       : pyExp
   }
 
@@ -43,7 +41,7 @@ class StrX {
   static tag (label, item) {
     const i = indexNaTab(label)
     let [key, text] = [
-      label.endsWith(')')
+      endsBracs(label)
         ? label
         : `${label.substring(0, i)}[${label.substring(i)}]`,
       `${item}`
@@ -124,16 +122,9 @@ class StrX {
     let t = ''
     for (let c of tx) {
       const co = c.charCodeAt(0)
-      // if (co === 12288) {
-      //   t += String.fromCharCode(co - 12256)
-      // } else if (co > 65280 && co < 65375) {
-      //   t += String.fromCharCode(co - 65248)
-      // } else {
-      //   t += String.fromCharCode(co)
-      // }
       t += co === 12288
         ? String.fromCharCode(co - 12256)
-        : co > 65280 && co < 65375
+        : 65280 < co && co < 65375
           ? String.fromCharCode(co - 65248)
           : String.fromCharCode(co)
     }
@@ -154,3 +145,12 @@ class StrX {
 export {
   StrX
 }
+
+// toHalfAngle Source
+// if (co === 12288) {
+//   t += String.fromCharCode(co - 12256)
+// } else if (co > 65280 && co < 65375) {
+//   t += String.fromCharCode(co - 65248)
+// } else {
+//   t += String.fromCharCode(co)
+// }
