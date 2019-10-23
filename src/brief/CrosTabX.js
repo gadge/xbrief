@@ -2,6 +2,7 @@ import { Preci } from '../utils/Preci'
 import { totx } from '../utils/str'
 import { zip } from '../utils/algebra'
 import { TableX } from './TableX'
+import { greys, palette, Visual } from 'spettro'
 
 /**
  * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
@@ -55,6 +56,15 @@ class CrosTabX {
    * @param {?function(*):string} [abstract]
    * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
    * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
+   * @param {{
+   *          [on]:boolean,
+   *          [mark]:{
+   *            [max]:string|number[],
+   *            [min]:string|number[],
+   *            [na]:string|number[],
+   *          },
+   *          [direct]:number
+   *         }} [visual]
    * @param {boolean} [ansi=false]
    * @param {boolean} [chinese=false]
    * @return {string}
@@ -72,11 +82,20 @@ class CrosTabX {
         head: 0,
         tail: 0
       },
+      visual = {
+        on: true,
+        mark: {
+          max: palette.lightGreen.accent_3,
+          min: palette.orange.accent_2,
+          na: greys.blueGrey.lighten_3,
+        },
+        direct: 2
+      },
       ansi = false,
       chinese = false
     } = {}) {
     const { head, rows } = _preci(crosTab, { abstract, side, banner })
-    return TableX.brief({ head, rows }, { chinese, ansi })
+    return TableX.brief({ head, rows }, { visual, ansi, chinese })
   }
 }
 

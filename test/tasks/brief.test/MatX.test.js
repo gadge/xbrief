@@ -1,5 +1,8 @@
 import { boxoffice } from '../../asset/boxoffice.190227.json.rows'
-import { MatX, StrX } from '../../../src'
+import { deco, MatX, StrX } from '../../../src'
+import { greys, palette, shades, Visual } from 'spettro'
+import { Stat, StatMx } from 'borel'
+import { ArrX } from '../../../src/brief/ArrX'
 // import { GP, Chrono } from 'elprimero'
 
 const matrixSet = {
@@ -16,7 +19,7 @@ const matrixSet = {
     [0, 1, 11, 7],
     [6, 4, 4, 0]
   ],
-  boxOffice: boxoffice.map(row => [...Object.values(row)])
+  boxOffice: boxoffice.map(row => Object.values(row).slice(0, 5))
 }
 
 const paramSet = {
@@ -83,7 +86,7 @@ const paramSet = {
   }
 }
 
-// test('MatrixTest.xBriefTest', () => {
+// it('MatrixTest.xBriefTest', () => {
 //   TestMatX.xBriefTest()
 //   // expect(sum(1, 2)).toBe(3);
 // })
@@ -94,18 +97,29 @@ export class MatXTest {
     for (let [paramName, param] of Object.entries(paramSet)) {
       `  ${paramName}`.tag(JSON.stringify(param)).wL()
       for (let [key, matrix] of Object.entries(matrixSet)) {
-        `    ${key}`.tag(MatX.xBrief.call(null, matrix, param)).wL()
+        `    ${key}`.tag(MatX.xBrief(matrix, param)).wL()
       }
       ''.wL()
     }
   }
 
-  static xBriefTestParam () {
-    'matrixSet.boxOffice'.wL()
-    MatX.xBrief(matrixSet.boxOffice, {
-        rows: { head: 5 }
-      }
-    )
+  static xBriefTestColorize () {
+    for (let [key, matrix] of Object.entries(matrixSet)) {
+      `    ${key}`.tag(
+        matrix
+          |> (_ => MatX.xBrief(_, {
+          visual: {
+            on: true,
+            mark: {
+              max: palette.lightGreen.accent_3,
+              min: palette.orange.accent_2,
+              na: greys.blueGrey.lighten_3,
+            },
+            direct: 0
+          }
+        }))
+      ).wL()
+    }
   }
 }
 

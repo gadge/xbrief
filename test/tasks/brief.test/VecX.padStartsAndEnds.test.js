@@ -3,7 +3,7 @@ import { ArrX } from '../../../src/brief/ArrX'
 
 const trees = Object.keys(superlativeTrees)
 
-test('padStarts test', () => {
+it('padStarts test', () => {
   'I. padStarts' |> console.log
   '[1] no padWidths passed in' |> console.log
   ArrX.padStarts(trees) |> console.log
@@ -17,7 +17,7 @@ test('padStarts test', () => {
   ArrX.padStarts(trees, lens) |> console.log
 })
 
-test('padEnds test', () => {
+it('padEnds test', () => {
   'I. padEnds' |> console.log
   '[1] no padWidths passed in' |> console.log
   ArrX.padEnds(trees) |> console.log

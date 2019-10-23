@@ -1,6 +1,7 @@
 import { rn, aeu, lpad, rpad } from '../utils/str'
 import { Preci } from '../utils/Preci'
 import stringLength from 'string-length'
+import { greys, palette, Visual } from 'spettro'
 
 const entriefy = (arr, base = 1) => {
   //maxPad = intExponent(arr.length) + 1
@@ -27,17 +28,20 @@ class ArrX {
       abstract,
       head,
       tail,
-      palette = {
-        max: null,
-        min: null,
-        na: null,
+      visual = {
+        on: true,
+        mark: {
+          max: palette.lightGreen.accent_3,
+          min: palette.orange.accent_2,
+          na: greys.blueGrey.lighten_3,
+        }
       }
     } = {}
   ) {
     const preci = Preci.fromArr(arr, head, tail)
       .map(abstract)
       .stringify()
-    const elements = preci.toList('...')
+    const elements = preci.toList('...') |> (_ => Visual.vector(_, visual))
     return elements.length ? elements.join(delimiter) : aeu
   }
 
@@ -54,22 +58,27 @@ class ArrX {
       abstract,
       head,
       tail,
-      palette = {
-        max: null,
-        min: null,
-        na: null,
+      visual = {
+        on: true,
+        mark: {
+          max: palette.lightGreen.accent_3,
+          min: palette.orange.accent_2,
+          na: greys.blueGrey.lighten_3,
+        }
       }
     } = {}
   ) {
-    if (!arr) return aeu
-    const { length } = arr
-    const preci = Preci.fromArr(arr, head, tail)
-      .map(abstract)
-      .stringify()
-    const elements = preci
+    if (!arr || !arr.length) return aeu
+    const
+      { length } = arr,
+      preci = Preci.fromArr(arr, head, tail)
+        .map(abstract)
+        .stringify()
+    let elements = preci
       .jectHead(entriefy)
       .jectTail(ar => entriefy(ar, length - tail + 1))
       .toList('...')
+    if (visual.on) elements = Visual.vector(elements, visual)
     return elements.length ? elements.join(rn) : aeu
   }
 

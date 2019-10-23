@@ -28,6 +28,6 @@ class ChnEngTransTest {
 
 }
 
-test('ChnEngTransTest', () => {
+it('ChnEngTransTest', () => {
   ChnEngTransTest.test()
 })

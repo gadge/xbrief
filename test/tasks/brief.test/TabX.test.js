@@ -1,7 +1,7 @@
 import nbaPlayers from 'funfact/dist/data/nba/players'
 import { CrosTabX, TableX, totx } from '../../../src'
 import chalk from 'chalk'
-import { palette } from 'spettro'
+import { greys, palette } from 'spettro'
 
 class TabXTest {
 
@@ -44,7 +44,7 @@ class TabXTest {
       banner: ['Shake', 'Shack', 'Drake', 'Drack'],
       matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
     }
-    matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
+    // matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
     TableX.brief(
       { banner, matrix },
       {
@@ -56,12 +56,12 @@ class TabXTest {
   }
 }
 
-describe('Tab X Test', function () {
-  this.timeout(1000 * 60)
-  it('Tab X Test: test Simple Cros Tab ', () => {
-    TabXTest.testSimpleCrosTab()
-  })
-})
+// describe('Tab X Test', function () {
+//   this.timeout(1000 * 60)
+//   it('Tab X Test: test Simple Cros Tab ', () => {
+//     TabXTest.testSimpleCrosTab()
+//   })
+// })
 
 export {
   TabXTest

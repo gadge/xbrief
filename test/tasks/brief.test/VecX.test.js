@@ -96,9 +96,9 @@ class VecXTest {
   }
 }
 
-test('ArrayTest.vBriefTest', () => {
-  VecXTest.vBriefTest()
-  // expect(sum(1, 2)).toBe(3);
-})
+// it('ArrayTest.vBriefTest', () => {
+//   VecXTest.vBriefTest()
+//   // expect(sum(1, 2)).toBe(3);
+// })
 
 export { VecXTest }

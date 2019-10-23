@@ -3,6 +3,8 @@ import { StrX } from './StrX'
 import { Preci } from '../utils/Preci'
 import { lpad, rpad, totx, zhChars, rn } from '../utils/str'
 import { transpose, zip } from '../utils/algebra'
+import { greys, palette, Visual } from 'spettro'
+import { Mx } from 'veho'
 
 const { hasChn, toFullAngle } = StrX
 const { maxLen, padStarts } = ArrX
@@ -27,11 +29,6 @@ function _preci (table,
     rows: _rows = {
       head: 0,
       tail: 0
-    },
-    palette = {
-      max: null,
-      min: null,
-      direction: null
     }
   } = {}) {
   let { head, rows } = table
@@ -62,6 +59,15 @@ class TableX {
    * @param {?function(*):string} [abstract]
    * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [_head]
    * @param {{[head]:?number,[tail]:?number}} [_rows]
+   * @param {{
+   *          [on]:boolean,
+   *          [mark]:{
+   *            [max]:string|number[],
+   *            [min]:string|number[],
+   *            [na]:string|number[],
+   *          },
+   *          [direct]:number
+   *         }} [visual]
    * @param {boolean} [ansi=false]
    * @param {boolean} [chinese=false]
    * @return {string}
@@ -78,6 +84,15 @@ class TableX {
         head: 0,
         tail: 0
       },
+      visual = {
+        on: true,
+        mark: {
+          max: palette.lightGreen.accent_3,
+          min: palette.orange.accent_2,
+          na: greys.blueGrey.lighten_3,
+        },
+        direct: 2
+      },
       ansi = false,
       chinese = false,
     } = {}) {
@@ -85,6 +100,10 @@ class TableX {
       head = table.head || table.banner || table.header,
       rows = table.rows || table.matrix || table.rowSet;
     ({ head, rows } = _preci({ head, rows }, { abstract, head: _head, rows: _rows }))
+    if (visual.on) {
+      ansi = true
+      rows = Visual.matrix(rows, visual)
+    }
     return chinese ? briefCn({ head, rows }, ansi) : briefEn({ head, rows }, ansi)
   }
 }

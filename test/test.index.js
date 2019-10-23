@@ -10,22 +10,15 @@
 //
 // StringTest.test()
 
-// import { ArrayBriefTest } from './tasks/brief.test/array.brief.test'
-//
-// // ArrayTest.hBriefTest()
-// ArrayBriefTest.test()
-
 // import { TestMapX } from './tasks/brief.test/test.MapX'
 //
 // TestMapX.hBriefTest()
 
-import { MatXTest } from './tasks/brief.test/MatX.test'
-
-MatXTest.xBriefTest()
 
 // import { TabXTest } from './tasks/brief.test/TabX.test'
 //
-// TabXTest.test()
+// TabXTest.testSimpleCrosTab()
+// TabXTest.testSimpleTable()
 
 // import { TypTest } from './typ.test/typ.test'
 //
@@ -34,3 +27,12 @@ MatXTest.xBriefTest()
 // import { PreciTest } from './brief.test/preci.test'
 //
 // PreciTest.test()
+
+// import { MatXTest } from './tasks/brief.test/MatX.test'
+//
+// // MatXTest.xBriefTest()
+// MatXTest.xBriefTestColorize()
+
+// import { ArrXTest } from './tasks/brief.test/ArrX.test'
+//
+// ArrXTest.test()
