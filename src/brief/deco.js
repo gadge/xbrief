@@ -1,19 +1,13 @@
 import { tb, rn } from '../utils/str'
-import { Typ } from 'typen'
+import { NumLoose, Typ } from 'typen'
 import chalk from 'chalk'
-import { palette, greys } from 'spettro'
+import { palette, greys, Visual } from 'spettro'
 import stringLength from 'string-length'
 
-let deco = function (obj) {
-  return deNode(obj, 0)
-}
+let deco = obj => deNode(obj, 0)
 
-const
-  _o = 'object',
-  _f = 'function',
-  isSimple = (x) => !x || typeof x !== _o && typeof x !== _f,
-  { initial } = Typ
-
+const { initial } = Typ
+const { isNumeric } = NumLoose
 const
   pal = {
     idx: greys.brown.lighten_4,
@@ -28,18 +22,19 @@ const
  *
  * @param {*} node
  * @param {number} [l]
- * @return {string}
+ * @return {string|number}
  */
 function deNode (node, l = 0) {
   switch (typeof node) {
     case 'string':
-      return `${chalk.hex(pal.str)(node)}`
+      return isNumeric(node) ? node : `${chalk.hex(pal.str)(node)}`
     case 'object':
     case 'function':
       return deJson(node, l)
     case 'bigint':
     case 'number':
-      return `${chalk.hex(pal.num)(node)}`
+      return node
+    // return `${chalk.hex(pal.num)(node)}`
     case 'boolean':
     case 'symbol':
     case 'undefined':
@@ -118,9 +113,10 @@ let deEntries = (entries, l, rn) => {
 
 let deList = (arr, l, rn) => {
   const points = arr.map(it => deNode(it, l + 1))
+  const visualized = Visual.vector(points)
   return stringLength(points.reduce((a, b) => a + b, 0).toString()) > 36
-    ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
-    : points.join(',')
+    ? `${rn}  ${visualized.join(`,${rn + tb}`)}${rn}`
+    : visualized.join(',')
 }
 
 export {

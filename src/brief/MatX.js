@@ -59,7 +59,7 @@ class MatX {
         ),
       cis = coins(rowsPreci.toList())
     let mx = rowsPreci.toList(cis.map(_ => '..'))
-    if (visual.on) {
+    if (visual.on !== false) {
       ansi = true
       mx = Visual.matrix(mx, visual)
     }

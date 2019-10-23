@@ -19,7 +19,7 @@ const matrixSet = {
     [0, 1, 11, 7],
     [6, 4, 4, 0]
   ],
-  boxOffice: boxoffice.map(row => Object.values(row).slice(0, 5))
+  // boxOffice: boxoffice.map(row => Object.values(row).slice(0, 5))
 }
 
 const paramSet = {
@@ -109,12 +109,6 @@ export class MatXTest {
         matrix
           |> (_ => MatX.xBrief(_, {
           visual: {
-            on: true,
-            mark: {
-              max: palette.lightGreen.accent_3,
-              min: palette.orange.accent_2,
-              na: greys.blueGrey.lighten_3,
-            },
             direct: 0
           }
         }))

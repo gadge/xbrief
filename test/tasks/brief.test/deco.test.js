@@ -42,11 +42,11 @@ class DecoTest {
       ),
       superlativeTrees_map: superlativeTrees,
       simple_lambda: (x) => `${x}`,
-      simple_func: StrX.wL,
-      class_ins: new MoneyForm('zh-CN'),
-      class: MoneyForm,
-      class_ins2: new Player('Messi', '001'),
-      class2: Player
+      // simple_func: StrX.wL,
+      // class_ins: new MoneyForm('zh-CN'),
+      // class: MoneyForm,
+      // class_ins2: new Player('Messi', '001'),
+      // class2: Player
     }
     objects |> deco |> console.log
     // for (let [k, v] of Object.entries(objects)) {

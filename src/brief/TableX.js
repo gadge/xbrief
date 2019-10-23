@@ -4,7 +4,6 @@ import { Preci } from '../utils/Preci'
 import { lpad, rpad, totx, zhChars, rn } from '../utils/str'
 import { transpose, zip } from '../utils/algebra'
 import { greys, palette, Visual } from 'spettro'
-import { Mx } from 'veho'
 
 const { hasChn, toFullAngle } = StrX
 const { maxLen, padStarts } = ArrX
@@ -100,7 +99,7 @@ class TableX {
       head = table.head || table.banner || table.header,
       rows = table.rows || table.matrix || table.rowSet;
     ({ head, rows } = _preci({ head, rows }, { abstract, head: _head, rows: _rows }))
-    if (visual.on) {
+    if (visual.on !== false) {
       ansi = true
       rows = Visual.matrix(rows, visual)
     }

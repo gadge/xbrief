@@ -2,14 +2,14 @@ import { Preci } from '../utils/Preci'
 import { totx } from '../utils/str'
 import { zip } from '../utils/algebra'
 import { TableX } from './TableX'
-import { greys, palette, Visual } from 'spettro'
+import { greys, Pal, palette, Visual } from 'spettro'
 
 /**
  * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
  * @param {?function(*):string} [abstract]
  * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
  * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
- * @return {{head:string[],rows:string[][]}}
+ * @return {{side:string[],banner:string[],matrix:string[][]}}
  */
 function _preci (crosTab,
   {
@@ -32,21 +32,19 @@ function _preci (crosTab,
       .fromArr(crosTab.side, _s.head, _s.tail)
       .map(_s.abstract || totx)
       .toList('..'),
-    head = Preci
+    banner = Preci
       .fromArr(crosTab.banner, _b.head, _b.tail)
       .map(_b.abstract || totx)
       .toList('..'),
-    rows = Preci
+    matrix = Preci
       .fromArr(crosTab.matrix, _s.head, _s.tail)
       .map(row => Preci
         .fromArr(row, _b.head, _b.tail)
         .map(abstract)
         .toList('..')
       )
-      .toList(head.map(_ => '..'))
-  head.unshift(crosTab.title || '')
-  zip(side, rows, (s, row) => row.unshift(s))
-  return { head, rows }
+      .toList(banner.map(_ => '..'))
+  return { side, banner, matrix }
 }
 
 class CrosTabX {
@@ -54,8 +52,8 @@ class CrosTabX {
    *
    * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
    * @param {?function(*):string} [abstract]
-   * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
-   * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
+   * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [_s]
+   * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [_b]
    * @param {{
    *          [on]:boolean,
    *          [mark]:{
@@ -72,12 +70,12 @@ class CrosTabX {
   static brief (crosTab,
     {
       abstract,
-      side = {
+      side: _s = {
         abstract,
         head: 0,
         tail: 0
       },
-      banner = {
+      banner: _b = {
         abstract,
         head: 0,
         tail: 0
@@ -85,17 +83,23 @@ class CrosTabX {
       visual = {
         on: true,
         mark: {
-          max: palette.lightGreen.accent_3,
-          min: palette.orange.accent_2,
-          na: greys.blueGrey.lighten_3,
+          max: greys.grey.lighten_5,
+          min: greys.grey.darken_1,
+          na: palette.indigo.lighten_2
         },
         direct: 2
       },
       ansi = false,
       chinese = false
     } = {}) {
-    const { head, rows } = _preci(crosTab, { abstract, side, banner })
-    return TableX.brief({ head, rows }, { visual, ansi, chinese })
+    let { side, banner, matrix } = _preci(crosTab, { abstract, side: _s, banner: _b })
+    if (visual.on !== false) {
+      ansi = true
+      matrix = Visual.matrix(matrix, visual)
+    }
+    banner.unshift(crosTab.title || '')
+    zip(side, matrix, (s, row) => row.unshift(s))
+    return TableX.brief({ head: banner, rows: matrix }, { visual: { on: false }, ansi, chinese })
   }
 }
 

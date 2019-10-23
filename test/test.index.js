@@ -1,6 +1,6 @@
-// import { DecoTest } from './tasks/brief.test/deco.test'
-//
-// DecoTest.decoTest()
+import { DecoTest } from './tasks/brief.test/deco.test'
+
+DecoTest.decoTest()
 
 // import { RegexTest } from './brief.test/regex.test'
 //
@@ -15,10 +15,10 @@
 // TestMapX.hBriefTest()
 
 
-// import { TabXTest } from './tasks/brief.test/TabX.test'
-//
-// TabXTest.testSimpleCrosTab()
-// TabXTest.testSimpleTable()
+import { TabXTest } from './tasks/brief.test/TabX.test'
+
+TabXTest.testSimpleCrosTab()
+TabXTest.testSimpleTable()
 
 // import { TypTest } from './typ.test/typ.test'
 //
@@ -32,7 +32,7 @@
 //
 // // MatXTest.xBriefTest()
 // MatXTest.xBriefTestColorize()
-
+//
 // import { ArrXTest } from './tasks/brief.test/ArrX.test'
 //
 // ArrXTest.test()

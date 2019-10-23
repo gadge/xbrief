@@ -1,7 +1,7 @@
 import { rn, aeu, lpad, rpad } from '../utils/str'
 import { Preci } from '../utils/Preci'
 import stringLength from 'string-length'
-import { greys, palette, Visual } from 'spettro'
+import { Visual, palette, greys } from 'spettro'
 
 const entriefy = (arr, base = 1) => {
   //maxPad = intExponent(arr.length) + 1
@@ -41,7 +41,10 @@ class ArrX {
     const preci = Preci.fromArr(arr, head, tail)
       .map(abstract)
       .stringify()
-    const elements = preci.toList('...') |> (_ => Visual.vector(_, visual))
+    let elements = preci.toList('...')
+    if (visual.on !== false) {
+      elements = Visual.vector(elements, visual)
+    }
     return elements.length ? elements.join(delimiter) : aeu
   }
 

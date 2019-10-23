@@ -28,7 +28,7 @@ class TabXTest {
       banner: ['Shake', 'Shack', 'Drake', 'Drack'],
       matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
     }
-    matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
+    'CrosTab' |> console.log
     CrosTabX.brief(
       { side, banner, matrix },
       {
@@ -37,6 +37,7 @@ class TabXTest {
         banner: { head: 3, tail: 1 },
         ansi: true
       }) |> console.log
+    '' |> console.log
   }
 
   static testSimpleTable () {
@@ -45,12 +46,12 @@ class TabXTest {
       matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
     }
     // matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
+
     TableX.brief(
       { banner, matrix },
       {
         head: { head: 2, tail: 1 },
         rows: { head: 2, tail: 1 },
-        ansi: true
       }) |> console.log
 
   }
