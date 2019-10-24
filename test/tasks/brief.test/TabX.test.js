@@ -55,6 +55,23 @@ class TabXTest {
       }) |> console.log
 
   }
+
+  static testSimpleChineseTable () {
+    let { banner, matrix } = {
+      banner: ['Shake', '词缀', 'Drake', 'Drack'],
+      matrix: [['沉鱼', 2, 3, 4], [2, '落雁', 4, 5], [3, 4, '闭月', 6], [5, 6, 7, '羞花']]
+    }
+    // matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
+
+    TableX.brief(
+      { banner, matrix },
+      {
+        head: { head: 2, tail: 1 },
+        rows: { head: 2, tail: 1 },
+        chinese: true
+      }) |> console.log
+
+  }
 }
 
 // describe('Tab X Test', function () {

@@ -6,7 +6,7 @@ const charCodeToLower = n => {
 
 class StringToLowerCaseStrategies {
   static test () {
-    const { lapse, result } = Chrono.crossByParamsAndFuncs({
+    const { lapse, result } = Chrono.strategies({
       repeat: 2E+6,
       paramsList: {
         Shakespeare: ['Shakespeare'],

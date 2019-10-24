@@ -1,4 +1,4 @@
-import { tb, rn } from '../utils/str'
+import { tb, rn, rpad, lpad } from '../utils/str'
 import { NumLoose, Typ } from 'typen'
 import chalk from 'chalk'
 import { palette, greys, Visual } from 'spettro'
@@ -9,13 +9,13 @@ let deco = obj => deNode(obj, 0)
 const { initial } = Typ
 const { isNumeric } = NumLoose
 const
-  pal = {
-    idx: greys.brown.lighten_4,
-    str: palette.lightGreen.accent_2,
-    num: palette.deepOrange.accent_2,
-    udf: palette.deepPurple.accent_2,
-    brk: palette.blue.accent_2,
-    brc: palette.amber.base
+  Pal = {
+    idx: chalk.hex(greys.brown.lighten_4),
+    str: chalk.hex(palette.lightGreen.accent_2),
+    num: chalk.hex(palette.deepOrange.accent_2),
+    udf: chalk.hex(palette.deepPurple.accent_2),
+    brk: chalk.hex(palette.blue.accent_2),
+    brc: chalk.hex(palette.amber.base)
   }
 
 /**
@@ -27,24 +27,24 @@ const
 function deNode (node, l = 0) {
   switch (typeof node) {
     case 'string':
-      return isNumeric(node) ? node : `${chalk.hex(pal.str)(node)}`
+      return isNumeric(node) ? node : `${Pal.str(node)}`
     case 'object':
     case 'function':
       return deJson(node, l)
     case 'bigint':
     case 'number':
       return node
-    // return `${chalk.hex(pal.num)(node)}`
+    // return `${pal.num)(node)}`
     case 'boolean':
     case 'symbol':
     case 'undefined':
-      return `${chalk.hex(pal.udf)(node)}`
+      return `${Pal.udf(node)}`
   }
 }
 
-const bracket = content => chalk.hex(pal.brk)('[ ') + content + chalk.hex(pal.brk)(' ]')
+const bracket = content => Pal.brk('[ ') + content + Pal.brk(' ]')
 
-const brace = content => chalk.hex(pal.brc)('{') + content + chalk.hex(pal.brc)('}')
+const brace = content => Pal.brc('{') + content + Pal.brc('}')
 
 function deJson (node, l = 0) {
   let [r, concat] = [rn + tb.repeat(l), '']
@@ -102,21 +102,23 @@ function deNode2 (node, l = 0) {
 }
 
 let deEntries = (entries, l, rn) => {
-  const tEntries = entries.map(([k, v]) => [`${k}`, v])
-  const max = Math.max(...tEntries.map(([k]) => stringLength(k)))
-  const points = tEntries
-    .map(([k, v]) => `${chalk.hex(pal.idx)(k.padEnd(max, ' '))}: ${deNode(v, l + 1)}`)
-  return points.length > 1
+  let
+    _ents = entries.map(([k, v]) => [`${k}`, v]),
+    pad = Math.max(..._ents.map(([k]) => stringLength(k)))
+  _ents = _ents
+    .map(([k, v]) => [Pal.idx(lpad(k, pad, ' ', true)), deNode(v, l + 1)])
+  _ents = Visual.column(_ents, 1, { deep: false })
+  const points = _ents.map(([k, v]) => `${k}: ${v}`)
+  return stringLength(points.reduce((a, b) => a + b, 0).toString()) > 36
     ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
-    : points.join(',')
+    : points.join(', ')
 }
 
 let deList = (arr, l, rn) => {
-  const points = arr.map(it => deNode(it, l + 1))
-  const visualized = Visual.vector(points)
+  const points = arr.map(it => deNode(it, l + 1)) |> Visual.vector
   return stringLength(points.reduce((a, b) => a + b, 0).toString()) > 36
-    ? `${rn}  ${visualized.join(`,${rn + tb}`)}${rn}`
-    : visualized.join(',')
+    ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
+    : points.join(',')
 }
 
 export {

@@ -1,5 +1,5 @@
 import { iterateStaticMethod } from './utils/iterateStaticMethod'
-import { TestMapX } from './tasks/brief.test/test.MapX'
+import { MapXTest } from './tasks/brief.test/test.MapX'
 import { VecXTest } from './tasks/brief.test/VecX.test'
 import { TypTest } from './tasks/typ.test/typ.test'
 import { ArrayBriefTest } from './tasks/brief.test/array.brief.test'
@@ -9,7 +9,7 @@ it('Array brief it', () => {
 })
 
 it('Test MapX', () => {
-  iterateStaticMethod(TestMapX)
+  iterateStaticMethod(MapXTest)
 })
 
 it('Test VecX', () => {

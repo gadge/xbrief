@@ -5,7 +5,7 @@ import { CrosTabX } from '../../../src/brief/CrosTabX'
 
 export class ArrXTest {
   static test () {
-    const { lapse, result } = Chrono.crossByParamsAndFuncs({
+    const { lapse, result } = Chrono.strategies({
       repeat: 1E+4,
       paramsList: {
         arithmetic: [[1, 2, 3, 4, 5, 6, 7, 8]],

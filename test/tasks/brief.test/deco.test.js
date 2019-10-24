@@ -14,13 +14,13 @@ class DecoTest {
       .then(response => {
         let jso = response.data
         console.log(jso)
-        // deco(jso).wL()
+        // deco(jso)  |> console.log
       })
       .catch(Xio.logErr)
     const message = 'Hello ES6!'
-// arr.vBrief().wL()
-    deco(message).wL()
-    arr.vBrief().wL()
+// arr.vBrief()  |> console.log
+    deco(message)  |> console.log
+    arr.vBrief()  |> console.log
   }
 
   static decoTest () {
@@ -40,6 +40,7 @@ class DecoTest {
           x + y + 1
         )
       ),
+      simple_map: new Map([['Lagos', 861], ['Dhaka', 8906], ['Lima', 9174], ['Ankara', 5271], ['Nagpur', 2405]]),
       superlativeTrees_map: superlativeTrees,
       simple_lambda: (x) => `${x}`,
       // simple_func: StrX.wL,
@@ -51,7 +52,7 @@ class DecoTest {
     objects |> deco |> console.log
     // for (let [k, v] of Object.entries(objects)) {
     //   // v |> Typ.check |> console.log
-    //   k.tag(deco(v)).wL()
+    //   k.tag(deco(v))  |> console.log
     // }
   }
 }

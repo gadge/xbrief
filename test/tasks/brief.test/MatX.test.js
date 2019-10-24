@@ -93,13 +93,13 @@ const paramSet = {
 
 export class MatXTest {
   static xBriefTest () {
-    ''.tag(`${MatXTest.name}.${MatXTest.xBriefTest.name}`).wL()
+    ''.tag(`${MatXTest.name}.${MatXTest.xBriefTest.name}`)  |> console.log
     for (let [paramName, param] of Object.entries(paramSet)) {
-      `  ${paramName}`.tag(JSON.stringify(param)).wL()
+      `  ${paramName}`.tag(JSON.stringify(param))  |> console.log
       for (let [key, matrix] of Object.entries(matrixSet)) {
-        `    ${key}`.tag(MatX.xBrief(matrix, param)).wL()
+        `    ${key}`.tag(MatX.xBrief(matrix, param))  |> console.log
       }
-      ''.wL()
+      ''  |> console.log
     }
   }
 
@@ -112,7 +112,7 @@ export class MatXTest {
             direct: 0
           }
         }))
-      ).wL()
+      )  |> console.log
     }
   }
 }

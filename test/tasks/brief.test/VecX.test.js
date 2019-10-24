@@ -58,41 +58,41 @@ class VecXTest {
       new Set([1, 2, 3, 2, 1]),
       { 1: 'a', 2: 'b', 3: 'c' }
     ]
-    GP.now().tag(`${VecXTest.name}.${VecXTest.determineArray.name}`).wL()
+    GP.now().tag(`${VecXTest.name}.${VecXTest.determineArray.name}`)  |> console.log
     for (let [i, candidate] of candidates.entries()) {
-      `${i}`.tag('isArray and length').wL()
+      `${i}`.tag('isArray and length')  |> console.log
       console.log(candidate);
-      `${candidate} isArray`.tag(Array.isArray(candidate)).wL();
-      `${candidate} isSolidArray`.tag(Array.isArray(candidate) && !!candidate.length).wL()
-      ''.wL()
+      `${candidate} isArray`.tag(Array.isArray(candidate))  |> console.log;
+      `${candidate} isSolidArray`.tag(Array.isArray(candidate) && !!candidate.length)  |> console.log
+      ''  |> console.log
     }
   }
 
   static hBriefTest () {
-    ''.tag(`${VecXTest.name}.${VecXTest.hBriefTest.name}`).wL()
+    ''.tag(`${VecXTest.name}.${VecXTest.hBriefTest.name}`)  |> console.log
     for (let [i, param] of paramSet.entries()) {
-      `  ${i}`.tag(JSON.stringify(param)).wL()
+      `  ${i}`.tag(JSON.stringify(param))  |> console.log
       for (let [key, arr] of Object.entries(arrSet)) {
-        `    ${key}`.tag(ArrX.hBrief.call(null, arr, param)).wL()
+        `    ${key}`.tag(ArrX.hBrief.call(null, arr, param))  |> console.log
       }
-      ''.wL()
+      ''  |> console.log
     }
   }
 
   static vBriefTest () {
-    ''.tag(`${VecXTest.name}.${VecXTest.vBriefTest.name}`).wL()
+    ''.tag(`${VecXTest.name}.${VecXTest.vBriefTest.name}`)  |> console.log
     for (let [i, param] of paramSet.entries()) {
-      `  ${i}`.tag(JSON.stringify(param)).wL()
+      `  ${i}`.tag(JSON.stringify(param))  |> console.log
       for (let [key, arr] of Object.entries(arrSet)) {
-        `    ${key}`.tag(ArrX.vBrief.call(null, arr, param)).wL()
+        `    ${key}`.tag(ArrX.vBrief.call(null, arr, param))  |> console.log
       }
-      ''.wL()
+      ''  |> console.log
     }
   }
 
   static vBriefTestParam () {
     const trees = Object.keys(superlativeTrees).map(name => name|>StrX.jv2py)
-    'trees'.tag(ArrX.vBrief(trees, { abstract: it => `${it}` })).wL()
+    'trees'.tag(ArrX.vBrief(trees, { abstract: it => `${it}` }))  |> console.log
   }
 }
 

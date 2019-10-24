@@ -13,12 +13,12 @@ export class RegexTest {
       /\((.*)\)/
     ]
     for (let [k, regExp] of regExps.entries()) {
-      `${k}`.tag(regExp).wL()
+      `${k}`.tag(regExp)  |> console.log
       let matches = sentence.match(regExp)
-      GP.now().tag('match').tag(ArrX.vBrief(matches || [])).wL()
+      GP.now().tag('match').tag(ArrX.vBrief(matches || []))  |> console.log
       let splits = sentence.split(regExp)
-      GP.now().tag('split').tag(ArrX.vBrief(splits || [])).wL()
-      StrX.wL()
+      GP.now().tag('split').tag(ArrX.vBrief(splits || []))  |> console.log
+      StrX  |> console.log
     }
 
     let searchBrackets = (tx) => {
@@ -26,7 +26,7 @@ export class RegexTest {
       let lifb = 0
       while (fibb !== -1) {
         let rsl = approach(tx, lifb, fibb)
-        GP.now().tag(`'${deco(rsl)}'`).wL()
+        GP.now().tag(`'${deco(rsl)}'`)  |> console.log
         fibb = rsl.y + 1
         lifb = rsl.x - 1
       }
@@ -34,17 +34,17 @@ export class RegexTest {
     let approach = (tx, lifb = 0, fibb = 0) => {
       let y = tx.lastIndexOf(')', fibb)
       let x = y > 0 ? tx.lastIndexOf('(', y) : -1
-      ArrX.hBrief([x, y]).wL()
+      ArrX.hBrief([x, y])  |> console.log
       return {
         x,
         y,
         tx: x !== -1 && y !== -1 ? tx.slice(x + 1, y) : tx
       }
     }
-    sentence.wL()
-    GP.now().tag('approach').tag(`'${deco(approach(sentence))}'`).wL()
+    sentence  |> console.log
+    GP.now().tag('approach').tag(`'${deco(approach(sentence))}'`)  |> console.log
     searchBrackets(sentence)
-    'done'.wL()
+    'done'  |> console.log
   }
 
   static matchWords () {
@@ -59,15 +59,15 @@ export class RegexTest {
     ]
 
     for (let [k, regex] of regexSet.entries()) {
-      `${k}`.tag(regex).wL()
+      `${k}`.tag(regex)  |> console.log
       for (let [, sentence] of sentences.entries()) {
-        // `  ${i}`.tag(sentence).wL()
+        // `  ${i}`.tag(sentence)  |> console.log
         try {
           let jalike = StrX.py2jv(sentence)
-          // '    py2jv'.tag(i).tag(jalike).wL()
+          // '    py2jv'.tag(i).tag(jalike)  |> console.log
           let pylike = StrX.jv2py(jalike, '_')
-          // '    jv2py'.tag(i).wL()
-          pylike.wL()
+          // '    jv2py'.tag(i)  |> console.log
+          pylike  |> console.log
         } catch (e) {
           console.log(e)
         }

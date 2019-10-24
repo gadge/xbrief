@@ -12,8 +12,8 @@ export function iterateStaticMethod (someClass) {
   const results = funcNames.map(async name => {
     const func = someClass[name]
     const title = `${someClass.name}.${name}`
-    GP.now().tag(title).wL()
-    // ''.wL()
+    GP.now().tag(title)  |> console.log
+    // ''  |> console.log
     const result = await func()
     return deco({
       class: someClass.name,
@@ -24,10 +24,10 @@ export function iterateStaticMethod (someClass) {
   Promise.all(results).then(results => {
     try {
       for (const result of results) {
-        GP.now().tag(result).wL()
+        GP.now().tag(result)  |> console.log
       }
     } catch (e) {
-      GP.now().tag('error').wL()
+      GP.now().tag('error')  |> console.log
       console.dir(e)
     }
   })

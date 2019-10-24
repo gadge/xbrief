@@ -27,7 +27,7 @@ const indexOfFIrstNonTab_3 = tx => {
 
 class IndexOfFirstNonTabTest {
   static test () {
-    const { lapse, result } = Chrono.crossByParamsAndFuncs({
+    const { lapse, result } = Chrono.strategies({
       repeat: 2E+6,
       paramsList: {
         space: ['  Hemingway'],

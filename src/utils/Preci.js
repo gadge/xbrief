@@ -43,11 +43,15 @@ export class Preci {
    * @return {*[]}
    */
   toList (el) {
-    const arr = []
-    if (!!this.head) arr.push(...this.head)
-    if (this.dash && !!el) arr.push(el)
-    if (!!this.tail) arr.push(...this.tail)
-    return arr
+    // let arr = []
+    // if (this.head) arr = arr.concat(this.head)
+    // if (this.dash && !!el) arr.push(el)
+    // if (this.tail) arr.push(...this.tail)
+    return [].concat(
+      this.head ? this.head : [],
+      this.dash && el ? [el] : [],
+      this.tail ? this.tail : []
+    )
   }
 
   jectHead (fn) {
@@ -75,8 +79,8 @@ export class Preci {
   map (fn, tailFn) {
     if (!fn) return this
     const
-      head = !!this.head ? this.head.map(fn) : this.head,
-      tail = !!this.tail ? this.tail.map(tailFn || fn) : this.tail
+      head = this.head ? this.head.map(fn) : this.head,
+      tail = this.tail ? this.tail.map(tailFn || fn) : this.tail
     return new Preci(head, tail, this.dash)
   }
 

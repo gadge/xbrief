@@ -15,7 +15,7 @@ inferFormat([]) // "[object Array]"
 inferFormat({}) // "[object Object]"
 
 ### wL()
-"anything".wL() for console.log("anything") 
+"anything"  |> console.log for console.log("anything") 
 
 ## License
 

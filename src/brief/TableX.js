@@ -137,6 +137,7 @@ function briefEn ({ head, rows }, ansi = false) {
  * @return {string}
  */
 function briefCn ({ head, rows }, ansi = false) {
+  rows |> console.log
   const { dash, space } = zhChars
   /**
    *
@@ -162,6 +163,7 @@ function briefCn ({ head, rows }, ansi = false) {
       )
     )
   ]
+  rows |> console.log
   return [
     banner.join(' | '),
     blank.join('-+-'),

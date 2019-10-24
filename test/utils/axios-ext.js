@@ -12,11 +12,11 @@ class Xio {
           ['status', error.status],
           ['headers', error.headers]
         ])).vBrief()
-      ).wL()
+      )  |> console.log
     } else {
-      'error'.tag(error).wL()
+      'error'.tag(error)  |> console.log
     }
-    'error.config'.tag(deco(error.config)).wL()
+    'error.config'.tag(deco(error.config))  |> console.log
   }
 }
 
