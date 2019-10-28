@@ -71,5 +71,10 @@ export class Ink {
     return this.list.join(' ')
   }
 
+  static log (msg) {
+    console.log(msg)
+    console.log('')
+  }
+
 }
 
