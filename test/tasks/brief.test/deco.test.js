@@ -1,6 +1,6 @@
 import axios from 'axios/index'
 import { Xio } from '../../utils/axios-ext'
-import { deco, Typ, StrX, MoneyForm } from '../../../src'
+import { deco, Typ, StrX, FinFm } from '../../../src'
 import { superlativeTrees } from '../../asset/superlativTrees.json'
 import { Player } from '../../asset/Player'
 

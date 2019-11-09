@@ -106,7 +106,7 @@ let deEntries = (entries, l, rn) => {
     _ents = entries.map(([k, v]) => [`${k}`, v]),
     pad = Math.max(..._ents.map(([k]) => stringLength(k)))
   _ents = _ents
-    .map(([k, v]) => [Pal.idx(lpad(k, pad, ' ', true)), deNode(v, l + 1)])
+    .map(([k, v]) => [Pal.idx(lpad(k, pad, true)), deNode(v, l + 1)])
   _ents = Visual.column(_ents, 1, { deep: false })
   const points = _ents.map(([k, v]) => `${k}: ${v}`)
   return stringLength(points.reduce((a, b) => a + b, 0).toString()) > 36

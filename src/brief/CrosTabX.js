@@ -1,51 +1,15 @@
-import { Preci } from '../utils/Preci'
-import { totx } from '../utils/str'
-import { zip } from '../utils/algebra'
-import { TableX } from './TableX'
-import { greys, Pal, palette, Visual } from 'spettro'
+import { Preci } from '../utils/Preci/Preci'
+import { aeu, lpad, rn, rpad, totx, zhChars } from '../utils/str'
+import { greys, palette } from 'spettro'
+import { Ar, Mx } from 'veho'
+import { isVisual } from '../utils/isVisual'
+import { destructPreX } from '../utils/Preci/functions/destructPreX'
+import { readCrop } from '../utils/readCrop'
+import { padTable } from '../utils/Preci/functions/padTable'
+import { mapAr, maxLen } from '../utils/arr'
+import { StrX } from './StrX'
 
-/**
- * @param {{side:*[],banner:*[],matrix:*[][],[title]:string}} crosTab
- * @param {?function(*):string} [abstract]
- * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [side]
- * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [banner]
- * @return {{side:string[],banner:string[],matrix:string[][]}}
- */
-function _preci (crosTab,
-  {
-    abstract,
-    side: _s = {
-      abstract,
-      head: 0,
-      tail: 0
-    },
-    banner: _b = {
-      abstract,
-      head: 0,
-      tail: 0
-    },
-  } = {}
-) {
-  abstract = abstract || totx
-  const
-    side = Preci
-      .fromArr(crosTab.side, _s.head, _s.tail)
-      .map(_s.abstract || totx)
-      .toList('..'),
-    banner = Preci
-      .fromArr(crosTab.banner, _b.head, _b.tail)
-      .map(_b.abstract || totx)
-      .toList('..'),
-    matrix = Preci
-      .fromArr(crosTab.matrix, _s.head, _s.tail)
-      .map(row => Preci
-        .fromArr(row, _b.head, _b.tail)
-        .map(abstract)
-        .toList('..')
-      )
-      .toList(banner.map(_ => '..'))
-  return { side, banner, matrix }
-}
+const { hasChn, toFullAngle } = StrX
 
 class CrosTabX {
   /**
@@ -92,14 +56,52 @@ class CrosTabX {
       ansi = false,
       chinese = false
     } = {}) {
-    let { side, banner, matrix } = _preci(crosTab, { abstract, side: _s, banner: _b })
-    if (visual.on !== false) {
-      ansi = true
-      matrix = Visual.matrix(matrix, visual)
-    }
-    banner.unshift(crosTab.title || '')
-    zip(side, matrix, (s, row) => row.unshift(s))
-    return TableX.brief({ head: banner, rows: matrix }, { visual: { on: false }, ansi, chinese })
+    let { side, banner, matrix } = crosTab, title, cue
+    const [ht, wd] = Mx.size(matrix)
+    if (!ht || !wd) return aeu
+    const visualOn = visual |> isVisual
+    ansi = visualOn ? true : ansi
+    side = Preci.fromArr(side, _s.head, _s.tail).stringify(_s.abstract).toList('..')
+    banner = Preci.fromArr(banner, _b.head, _b.tail).stringify(_b.abstract).toList('..')
+    const { rawx, palx, wordx } = destructPreX(
+      matrix, _s |> readCrop, _b |> readCrop,
+      { abstract, visual, ansi }, [ht, wd]);
+    ({ title, cue, side } = padSide(side, crosTab.title || '', ansi, chinese))
+    const { head, blanc, rows } = padTable(banner, wordx, rawx, palx, ansi, chinese);
+    ({ head, blanc, rows }) |> console.log
+    head.unshift(title)
+    blanc.unshift(cue)
+    Ar.zip(side, rows, (s, row) => row.unshift(s))
+    return [head.join(' | '), blanc.join('-+-')].concat(
+      rows.map(row => row.join(' | '))
+    ).join(rn)
+  }
+}
+
+const padSide = (side, title, ansi, chinese) => {
+  if (chinese) return padSideCn(side, title, ansi)
+  const
+    ts = [title].concat(side),
+    pad = maxLen(ts, ansi),
+    cue = '-'.repeat(pad)
+  title = rpad(title, pad, ansi)
+  side = mapAr(side, x => lpad(x, pad, ansi))
+  return { title, cue, side }
+}
+
+const padSideCn = (side, title, ansi) => {
+  const
+    { dash, space } = zhChars,
+    ts = [title].concat(side),
+    pad = maxLen(ts, ansi),
+    cn = ts.some(hasChn)
+  if (cn) {
+    title = rpad(toFullAngle(title), pad, ansi, space)
+    const cue = dash.repeat(pad)
+    side = mapAr(side, x => lpad(toFullAngle(x), pad, ansi, space))
+    return { title, cue, side }
+  } else {
+    return padSide(side, title, ansi)
   }
 }
 

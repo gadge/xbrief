@@ -1,6 +1,8 @@
 import hasAnsi from 'has-ansi'
 import stringLength from 'string-length'
+import { Num } from 'typen'
 
+const { isNumeric } = Num
 const rn = '\r\n'
 const tb = '  '
 const aeu = '(Ø)'
@@ -11,13 +13,17 @@ const zhChars = {
 
 const noop = () => {}
 
-const lpad = (tx, len, fill, ansi = false) => ansi && hasAnsi(tx)
-  ? tx.padStart(tx.length + len - stringLength(tx), fill)
-  : tx.padStart(len, fill)
+const lpad = (tx, pd, ansi = false, fill) => ansi && hasAnsi(tx)
+  ? tx.padStart(tx.length + pd - stringLength(tx), fill)
+  : tx.padStart(pd, fill)
 
-const rpad = (tx, len, fill, ansi = false) => ansi && hasAnsi(tx)
-  ? tx.padEnd(tx.length + len - stringLength(tx), fill)
-  : tx.padEnd(len, fill)
+const rpad = (tx, pd, ansi = false, fill) => ansi && hasAnsi(tx)
+  ? tx.padEnd(tx.length + pd - stringLength(tx), fill)
+  : tx.padEnd(pd, fill)
+
+const numPad = (tx, ref, pd, ansi = false, fill) => isNumeric(ref)
+  ? lpad(tx, pd, ansi, fill)
+  : rpad(tx, pd, ansi, fill)
 
 const isTab = (c) => c === '\t' || c === ' '
 const indexNaTab = (tx) => {
@@ -49,6 +55,7 @@ export {
   totx,
   lpad,
   rpad,
+  numPad,
   isTab,
   indexNaTab,
   beforeNaTab,

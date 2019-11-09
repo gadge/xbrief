@@ -1,5 +1,5 @@
 import { superlativeTrees } from '../../asset/superlativTrees.json'
-import { Preci } from '../../../src/utils/Preci'
+import { PreciStable } from '../../../src/utils/Preci/Preci'
 
 export class PreciTest {
   static test () {
@@ -13,7 +13,7 @@ export class PreciTest {
     ]
     params.forEach(param => {
       console.log(param)
-      const preci = Preci.fromArr(arr, param.head, param.tail)
+      const preci = PreciStable.fromArr(arr, param.head, param.tail)
       console.log(preci)
       console.log('')
     })

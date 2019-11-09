@@ -1,59 +1,72 @@
 import nbaPlayers from 'funfact/dist/data/nba/players'
-import { CrosTabX, TableX, totx } from '../../../src'
-import chalk from 'chalk'
-import { greys, palette } from 'spettro'
+import { CrosTabX, MagFm, TableX, totx } from '../../../src'
+import { Chrono } from 'elprimero'
 
 class TabXTest {
 
   static testSimpleCrosTab () {
-    const { head, rows } = nbaPlayers
-    'nbaPlayers' |> console.log
-    '' |> console.log
-
-    TableX.brief(
-      { head, rows },
-      {
-        rows: {
-          head: 10, tail: 2
-        },
-        head: {
-          head: 10, tail: 2
-        },
-        ansi: true,
-      }) |> console.log
-    '' |> console.log
+    // const { head, rows } = nbaPlayers
+    // 'nbaPlayers' |> console.log
+    // '' |> console.log
+    //
+    // TableX.brief(
+    //   { head, rows },
+    //   {
+    //     rows: {
+    //       head: 10, tail: 2
+    //     },
+    //     head: {
+    //       head: 10, tail: 2
+    //     },
+    //     ansi: true,
+    //   }) |> console.log
+    // '' |> console.log
 
     let { side, banner, matrix } = {
       side: ['foo', 'bar', 'baz'],
-      banner: ['Shake', 'Shack', 'Drake', 'Drack'],
-      matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
+      banner: ['Shake', 'Shack', '院线', 'Drack'],
+      matrix: [[1, '二', 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
     }
     'CrosTab' |> console.log
+    const mag = new MagFm(2, 3)
     CrosTabX.brief(
       { side, banner, matrix },
       {
-        abstract: totx,
+        abstract: x => mag.form(x),
         side: { head: 2, tail: 1 },
         banner: { head: 3, tail: 1 },
-        ansi: true
+        ansi: true,
+        chinese: true
       }) |> console.log
     '' |> console.log
   }
 
   static testSimpleTable () {
-    let { banner, matrix } = {
-      banner: ['Shake', 'Shack', 'Drake', 'Drack'],
-      matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
-    }
-    // matrix = matrix.map(row => row.map(x => chalk.hex(palette.orange.base)(x)))
-
-    TableX.brief(
-      { banner, matrix },
-      {
+    const funcList = {
+      stable: _ => TableX.brief(_, {
         head: { head: 2, tail: 1 },
         rows: { head: 2, tail: 1 },
-      }) |> console.log
-
+      }),
+    }
+    const { lapse, result } = Chrono.strategies({
+      repeat: 1E+0,
+      paramsList: {
+        simple: [{
+          banner: ['Shake', 'Shack', 'Drake', 'Drack'],
+          matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
+        }],
+      },
+      funcList
+    })
+    'lapse' |> console.log
+    lapse.brief() |> console.log
+    '' |> console.log
+    'result' |> console.log
+    for (let key of Object.keys(funcList)) {
+      key |> console.log
+      result.queryCell('simple', key) |> console.log
+      '' |> console.log
+    }
   }
 
   static testSimpleChineseTable () {

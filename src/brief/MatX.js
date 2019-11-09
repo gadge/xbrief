@@ -1,12 +1,11 @@
-import { ArrX } from './ArrX'
-import { lpad, rpad, rn, totx, aeu } from '../utils/str'
-import { Preci } from '../utils/Preci'
-import { coins } from '../utils/algebra'
-import { Visual, palette, greys } from 'spettro'
-import { NumLoose } from 'typen'
-
-const { isNumeric } = NumLoose
-const { maxLen } = ArrX
+import { rn, aeu } from '../utils/str'
+import { palette, greys } from 'spettro'
+import { Mx } from 'veho'
+import { isVisual } from '../utils/isVisual'
+import { destructPreX } from '../utils/Preci/functions/destructPreX'
+import { padMx } from '../utils/Preci/functions/padMx'
+import { readCrop } from '../utils/readCrop'
+import { maxLen } from '../utils/arr'
 
 class MatX {
   /**
@@ -47,33 +46,17 @@ class MatX {
       ansi = false
     } = {},
   ) {
-    if (!matrix || !matrix.length || !Array.isArray(matrix[0])) return aeu
-    const
-      rowsPreci = Preci
-        .fromArr(matrix, rows.head, rows.tail)
-        .map(
-          row => Preci
-            .fromArr(row, columns.head, columns.tail)
-            .map(abstract || totx)
-            .toList('...')
-        ),
-      cis = coins(rowsPreci.toList())
-    let mx = rowsPreci.toList(cis.map(_ => '..'))
-    if (visual.on !== false) {
-      ansi = true
-      mx = Visual.matrix(mx, visual)
-    }
-    const
-      pads = cis.map(c => mx.map(r => r[c])).map(ar => maxLen(ar, ansi)),
-      lines = mx
-        .map(row => row
-          .map((x, i) =>
-            isNumeric(x)
-              ? lpad(x, pads[i], undefined, ansi)
-              : rpad(totx(x), pads[i], undefined, ansi))
-          .join(delimiter)
-        )
-    return '[' + lines.map(row => `[${row}]`).join(`,${rn} `) + ']'
+    const [h, w] = Mx.size(matrix)
+    if (!h || !w) return aeu
+    ansi = (visual |> isVisual) ? true : ansi
+    const { rawx, palx, wordx } = destructPreX(
+      matrix,
+      rows |> readCrop, columns |> readCrop,
+      { abstract, visual, ansi },
+      [h, w]),
+      pads = Mx.columns(wordx, col => maxLen(col, ansi)),
+      lines = padMx(wordx, rawx, palx, pads, ansi).map(line => `[${line}]`)
+    return '[' + lines.join(`,${rn} `) + ']'
   }
 }
 

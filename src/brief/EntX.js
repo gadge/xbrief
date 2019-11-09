@@ -1,8 +1,9 @@
-import { Preci } from '../utils/Preci'
-import { totx, aeu, rn, rpad, lpad } from '../utils/str'
+import { Preci } from '../utils/Preci/Preci'
+import { totx, aeu, rn, rpad, lpad, numPad } from '../utils/str'
 import { greys, palette, Visual } from 'spettro'
 import stringLength from 'string-length'
 import { NumLoose } from 'typen'
+import { isVisual } from '../utils/isVisual'
 
 const { isNumeric } = NumLoose
 
@@ -90,33 +91,34 @@ class EntX {
     },
     ansi = false
   } = {}) {
-    let len = ansi || visual.on !== false ? stringLength : x => x.length
-    let [kPad, vPad] = [0, 0], _k, _v, _kl, _vl
-    const
-      [keyFn, valFn] = [keyAbstract || totx, abstract || totx],
-      preci = Preci
-        .fromArr(entries, head, tail)
-        .map(([k, v]) => {
-          _k = keyFn(k)
-          _v = valFn(v)
-          _kl = len(_k)
-          _vl = len(_v)
-          if (_kl > kPad) kPad = _kl
-          if (_vl > vPad) vPad = _vl
-          return [_k, _v]
-        })
-    let elements = preci.toList(['..', '..'])
-    if (visual.on !== false) {
-      ansi = true
-      Visual.column(elements, 1, { mark: visual.mark, deep: false },)
-    }
-    elements = elements.map(([k, v]) => lpad(k, kPad, ' ', ansi)
-      + delimiter
-      + (isNumeric(v)
-        ? rpad(totx(v), vPad, undefined, ansi)
-        : lpad(v, vPad, undefined, ansi))
-    )
-    return elements.length ? elements.join(rn) : aeu
+    const visualOn = visual |> isVisual
+    ansi = visualOn ? true : ansi
+    const [brfL, brfR] = [
+      keyAbstract ? (_ => String(keyAbstract(_))) : totx,
+      abstract ? (_ => String(abstract(_))) : totx
+    ]
+    let
+      len = ansi ? stringLength : x => x.length,
+      pL = 0, pR = 0, vL, vR, wL, wR,
+      preci = Preci.fromArr(entries, head, tail),
+      raws = preci.toList(['..', '..']),
+      vis = visualOn
+        ? Visual.column(raws, 1, { mark: visual.mark, retFn: true, mutate: false },)
+        : null,
+      ents = preci.map(([k, v]) => {
+        [vL, vR] = [brfL(k), brfR(v)];
+        [wL, wR] = [len(vL), len(vR)];
+        [pL, pR] = [wL > pL ? wL : pL, wR > pR ? wR : pR]
+        return [vL, vR]
+      }).toList(['..', '..']),
+      list = visualOn
+        ? ents.map(([k, v], i) =>
+          lpad(k, pL, ansi) + delimiter +
+          numPad(v, raws[i][1], pR, ansi) |> vis[i][1])
+        : ents.map(([k, v], i) =>
+          lpad(k, pL, ansi) + delimiter +
+          numPad(v, raws[i][1], pR, ansi))
+    return list.length ? list.join(rn) : aeu
   }
 }
 

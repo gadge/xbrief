@@ -1,51 +1,11 @@
-import { ArrX } from './ArrX'
-import { StrX } from './StrX'
-import { Preci } from '../utils/Preci'
-import { lpad, rpad, totx, zhChars, rn } from '../utils/str'
-import { transpose, zip } from '../utils/algebra'
-import { greys, palette, Visual } from 'spettro'
-
-const { hasChn, toFullAngle } = StrX
-const { maxLen, padStarts } = ArrX
-
-/**
- *
- * @param {{head:*[],rows:*[][]}} table
- * @param {?function(*):string} [abstract]
- * @param {{[abstract]:?function(*):string,[head]:?number,[tail]:?number}} [_head]
- * @param {{[head]:?number,[tail]:?number}} [rows]
- * @param {{[max]:string|number[],[min]:string|number[],[direction]:?number}} [palette]
- * @return {{head:string[],rows:string[][]}}
- */
-function _preci (table,
-  {
-    abstract,
-    head: _head = {
-      abstract: null,
-      head: 0,
-      tail: 0
-    },
-    rows: _rows = {
-      head: 0,
-      tail: 0
-    }
-  } = {}) {
-  let { head, rows } = table
-  abstract = abstract || totx
-  head = Preci
-    .fromArr(head, _head.head, _head.tail)
-    .map(_head.abstract || totx)
-    .toList('..')
-  rows = Preci
-    .fromArr(rows, _rows.head, _rows.tail)
-    .map(row =>
-      Preci
-        .fromArr(row, _head.head, _head.tail)
-        .map(abstract)
-        .toList('..')
-    ).toList(head.map(() => '..'))
-  return { head, rows }
-}
+import { Preci } from '../utils/Preci/Preci'
+import { aeu, rn } from '../utils/str'
+import { greys, palette } from 'spettro'
+import { Mx } from 'veho'
+import { isVisual } from '../utils/isVisual'
+import { destructPreX } from '../utils/Preci/functions/destructPreX'
+import { readCrop } from '../utils/readCrop'
+import { padTable } from '../utils/Preci/functions/padTable'
 
 class TableX {
   /**
@@ -97,76 +57,22 @@ class TableX {
     } = {}) {
     let
       head = table.head || table.banner || table.header,
-      rows = table.rows || table.matrix || table.rowSet;
-    ({ head, rows } = _preci({ head, rows }, { abstract, head: _head, rows: _rows }))
-    if (visual.on !== false) {
-      ansi = true
-      rows = Visual.matrix(rows, visual)
-    }
-    return chinese ? briefCn({ head, rows }, ansi) : briefEn({ head, rows }, ansi)
+      rows = table.rows || table.matrix || table.rowSet,
+      blanc
+    const [ht, wd] = Mx.size(rows)
+    if (!ht || !wd) return aeu
+    const visualOn = visual |> isVisual
+    ansi = visualOn ? true : ansi
+    const
+      hs = Preci.fromArr(head, _head.head, _head.tail).stringify(abstract).toList('..'),
+      { rawx, palx, wordx } = destructPreX(
+        rows, _rows |> readCrop, _head |> readCrop,
+        { abstract, visual, ansi }, [ht, wd]);
+    ({ head, blanc, rows } = padTable(hs, wordx, rawx, palx, ansi, chinese))
+    return [head.join(' | '), blanc.join('-+-')].concat(
+      rows.map(row => row.join(' | '))
+    ).join(rn)
   }
-}
-
-/**
- *
- * @param {{head:*[],rows:*[][]}} table
- * @param {boolean=false} [ansi]
- * @return {string}
- */
-function briefEn ({ head, rows }, ansi = false) {
-  /**
-   * @type {number[]}
-   */
-  const pads = ([head, ...rows] |> transpose).map(col => maxLen(col, ansi))
-  const [banner, blank, matrix] = [
-    head.map((x, i) => lpad(x, pads[i], ' ', ansi)),
-    pads.map(l => '-'.repeat(l)),
-    rows.map((row) => padStarts(row, { pads, ansi }))
-  ]
-  return [
-    banner.join(' | '),
-    blank.join('-+-'),
-    ...matrix.map(row => row.join(' | '))
-  ].join(rn)
-}
-
-/**
- *
- * @param {{head:*[],rows:*[][]}} table
- * @param {boolean=false} [ansi]
- * @return {string}
- */
-function briefCn ({ head, rows }, ansi = false) {
-  const { dash, space } = zhChars
-  /**
-   *
-   * @type {{pad:number,chn:boolean}[]}
-   */
-  const pads = ([head, ...rows] |> transpose)
-    .map(col =>
-      ({
-        pad: maxLen(col, ansi),
-        chn: col.some(hasChn)
-      })
-    )
-  const [banner, blank, matrix] = [
-    zip(head, pads, (x, { chn, pad }) => chn
-      ? rpad(toFullAngle(x), pad, space, ansi)
-      : rpad(x, pad, ' ', ansi)
-    ),
-    pads.map(p => (p.chn ? dash : '-').repeat(p.pad)),
-    rows.map(
-      row => zip(row, pads, (x, { chn, pad }) => chn
-        ? lpad(toFullAngle(x), pad, space, ansi)
-        : rpad(x, pad, ' ', ansi)
-      )
-    )
-  ]
-  return [
-    banner.join(' | '),
-    blank.join('-+-'),
-    ...matrix.map(row => row.join(' | '))
-  ].join(rn)
 }
 
 export {
