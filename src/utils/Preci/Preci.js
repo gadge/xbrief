@@ -17,7 +17,7 @@ export class Preci {
     return new Preci(ar, this.head, this.tail, this.dash)
   }
 
-  static fromArr (ar, head, tail) {
+  static fromArr (ar, head = 0, tail = 0) {
     let dash = true
     if (!ar || !ar.length) [head, tail, dash] = [0, 0, false]
     const length = ar.length

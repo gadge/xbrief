@@ -16,8 +16,8 @@
 
 import { TabXTest } from './tasks/brief.test/TabX.test'
 
-TabXTest.testSimpleCrosTab()
-// TabXTest.testSimpleTable()
+// TabXTest.testSimpleCrosTab()
+TabXTest.testSimpleTable()
 // TabXTest.testSimpleChineseTable()
 
 // import { TypTest } from './typ.test/typ.test'

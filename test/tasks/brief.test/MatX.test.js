@@ -33,10 +33,10 @@ export class MatXTest {
             head: 3,
             tail: 2
           },
-          // columns: {
-          //   head: 2,
-          //   tail: 1
-          // },
+          columns: {
+            head: 2,
+            tail: 1
+          },
           visual: {
             on: true,
             mark: {

@@ -1,6 +1,7 @@
-import { Ar, Mx } from 'veho'
+import { Mx } from 'veho'
 import { cropMapMx, cropMx } from './utils/cropMx'
 import { totx } from '../str'
+import { cropMapAr } from './utils/cropAr'
 
 export class PreX {
   constructor (mx, [top, bottom], [left, right], [height, width], [xDash, yDash]) {
@@ -39,11 +40,17 @@ export class PreX {
   }
 
   xHeight (elCn) {
-    return Math.min(this.hw[0], this.lr[0] + this.lr[1] + (this.dash[0] && elCn ? elCn : 0))
+    return Math.min(this.hw[0], this.height + (this.dash[0] && elCn ? elCn : 0))
   }
 
   xWidth (elCn) {
-    return Math.min(this.hw[1], this.lr[0] + this.lr[1] + (this.dash[1] && elCn ? elCn : 0))
+    const { tb, lr, hw, dash } = this
+    return Math.min(this.hw[1], this.width + (this.dash[1] && elCn ? elCn : 0))
+  }
+
+  emptyRow (el) {
+    const { hw: [, w], lr: [l, r] } = this
+    return cropMapAr(Array(w), () => el, l, w - r, w)
   }
 
   get voidSize () {
@@ -51,10 +58,9 @@ export class PreX {
     return [height - this.height, width - this.width]
   }
 
-  static fromMx (mx, [top, bottom], [left, right], size) {
+  static fromMx (mx, [top = 0, bottom = 0], [left = 0, right = 0], size = [0, 0]) {
     size = size || Mx.size(mx)
-    const [height, width] = size
-    let [xDash, yDash] = [true, true]
+    let [height, width] = size, [xDash, yDash] = [true, true]
     if (!height || !width) [top, bottom, xDash, yDash] = [0, 0, false, false]
     if (!top || top >= height) [top, bottom, xDash] = [height, 0, false]
     if (!left || left >= width) [left, right, yDash] = [width, 0, false]
@@ -79,7 +85,7 @@ export class PreX {
       } = this,
       _mx = Mx.copy(mx)
     xDash && el
-      ? _mx.splice(top, dx, Ar.ini(this.xWidth(1), el))
+      ? _mx.splice(top, dx, this.emptyRow(el))
       : _mx.splice(top, dx)
     if (yDash && el) {
       for (let row of _mx) row.splice(left, dy, el)

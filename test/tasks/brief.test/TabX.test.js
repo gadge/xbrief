@@ -44,7 +44,7 @@ class TabXTest {
   static testSimpleTable () {
     const funcList = {
       stable: _ => TableX.brief(_, {
-        head: { head: 2, tail: 1 },
+        head: { head: 2 },
         rows: { head: 2, tail: 1 },
       }),
     }

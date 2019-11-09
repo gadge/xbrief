@@ -19,7 +19,7 @@ const { hasChn, toFullAngle } = StrX
 export const padTable = (head, wordx, rawx, palx, ansi = false, chinese = false) => {
   if (chinese) return padTableCn(head, wordx, rawx, palx, ansi)
   const
-    pads = Mx.columns([head].concat(wordx), col => { return maxLen(col, ansi) }),
+    pads = Mx.columns([head].concat(wordx), col => maxLen(col, ansi)),
     [_head, blanc, rows] = [
       Ar.zip(head, pads, (x, p) => lpad(x, p, ansi)),
       pads.map(l => '-'.repeat(l)),

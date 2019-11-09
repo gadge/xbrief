@@ -68,7 +68,6 @@ class CrosTabX {
       { abstract, visual, ansi }, [ht, wd]);
     ({ title, cue, side } = padSide(side, crosTab.title || '', ansi, chinese))
     const { head, blanc, rows } = padTable(banner, wordx, rawx, palx, ansi, chinese);
-    ({ head, blanc, rows }) |> console.log
     head.unshift(title)
     blanc.unshift(cue)
     Ar.zip(side, rows, (s, row) => row.unshift(s))

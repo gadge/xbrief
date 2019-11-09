@@ -18,7 +18,7 @@ export const cropAr = (ar, hd, ts, l) => {
  * @param {*[]} ar
  * @param {function(*)|function(*,number)} fn
  * @param {number} hd - head(left) length
- * @param {number} ts - tail(right) start index
+ * @param {number} ts - tail(right) start index, ts=l-right
  * @param {number} l - array length
  * @returns {*[]}
  */
