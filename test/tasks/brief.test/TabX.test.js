@@ -1,5 +1,5 @@
 import nbaPlayers from 'funfact/dist/data/nba/players'
-import { CrosTabX, MagFm, TableX, totx } from '../../../src'
+import { CrosTabX, MagFm, TableX} from '../../../src'
 import { Chrono } from 'elprimero'
 
 class TabXTest {
@@ -42,29 +42,34 @@ class TabXTest {
   }
 
   static testSimpleTable () {
+    const paramsList = {
+      empty: [{
+        banner: ['foo', 'bar'],
+        matrix: [[]]
+      }],
+      simple: [{
+        banner: ['Shake', 'Shack', 'Drake', 'Drack'],
+        matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
+      }],
+    }
     const funcList = {
       stable: _ => TableX.brief(_, {
-        head: { head: 2 },
-        rows: { head: 2, tail: 1 },
+        head: { head: 2, tail: undefined },
+        rows: { head: 2, tail: undefined },
       }),
     }
     const { lapse, result } = Chrono.strategies({
       repeat: 1E+0,
-      paramsList: {
-        simple: [{
-          banner: ['Shake', 'Shack', 'Drake', 'Drack'],
-          matrix: [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [5, 6, 7, 8]]
-        }],
-      },
+      paramsList,
       funcList
     })
     'lapse' |> console.log
     lapse.brief() |> console.log
     '' |> console.log
     'result' |> console.log
-    for (let key of Object.keys(funcList)) {
+    for (let key of Object.keys(paramsList)) {
       key |> console.log
-      result.queryCell('simple', key) |> console.log
+      result.queryCell(key, 'stable') |> console.log
       '' |> console.log
     }
   }

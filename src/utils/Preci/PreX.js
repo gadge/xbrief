@@ -44,7 +44,6 @@ export class PreX {
   }
 
   xWidth (elCn) {
-    const { tb, lr, hw, dash } = this
     return Math.min(this.hw[1], this.width + (this.dash[1] && elCn ? elCn : 0))
   }
 
@@ -59,6 +58,7 @@ export class PreX {
   }
 
   static fromMx (mx, [top = 0, bottom = 0], [left = 0, right = 0], size = [0, 0]) {
+    ({ top, bottom, left, right, size }) |> console.log
     size = size || Mx.size(mx)
     let [height, width] = size, [xDash, yDash] = [true, true]
     if (!height || !width) [top, bottom, xDash, yDash] = [0, 0, false, false]

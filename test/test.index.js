@@ -2,6 +2,10 @@
 //
 // DecoTest.decoTest()
 
+import { DecoStrategies } from './strategies/Deco/deco.strategies'
+
+DecoStrategies.test()
+
 // import { RegexTest } from './brief.test/regex.test'
 //
 // RegexTest.matchWords()
@@ -14,10 +18,10 @@
 //
 // TestMapX.hBriefTest()
 
-import { TabXTest } from './tasks/brief.test/TabX.test'
+// import { TabXTest } from './tasks/brief.test/TabX.test'
 
 // TabXTest.testSimpleCrosTab()
-TabXTest.testSimpleTable()
+// TabXTest.testSimpleTable()
 // TabXTest.testSimpleChineseTable()
 
 // import { TypTest } from './typ.test/typ.test'

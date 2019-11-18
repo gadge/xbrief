@@ -1,8 +1,8 @@
 import { ArrX } from './ArrX'
 import { StrX } from './StrX'
-import { Preci } from '../utils/Preci'
-import { lpad, rpad, totx, zhChars, rn } from '../utils/str'
-import { transpose, zip } from '../utils/algebra'
+import { Preci } from '../functions/Preci'
+import { lpad, rpad, totx, zhChars, rn } from '../functions/str'
+import { transpose, zip } from '../functions/algebra'
 import { greys, palette, Visual } from 'spettro'
 
 const { hasChn, toFullAngle } = StrX

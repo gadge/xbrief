@@ -1,9 +1,9 @@
 import { ArrX } from './ArrX'
-import { rn, totx, aeu, numPad } from '../utils/str'
-import { PreciStable as Preci } from '../../test/strategies/Preci/src/Preci.stable'
+import { rn, totx, aeu, numPad } from '../functions/str'
+import { PreciStable as Preci } from '../../test/strategies/Preci/functions/Preci.stable'
 import { Visual, palette, greys } from 'spettro'
 import { Ar, Mx } from 'veho'
-import { isVisual } from '../utils/isVisual'
+import { isVisual } from '../functions/isVisual'
 
 const { maxLen } = ArrX
 const { map: mapAr } = Ar
