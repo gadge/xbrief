@@ -2,7 +2,7 @@ import { Ar, Mx } from 'veho'
 import { maxLen } from '../../arr'
 import { lpad, numPad, rpad, zhChars } from '../../str'
 import { padMx } from './padMx'
-import { StrX } from '../../../index'
+import { StrX } from '../../../brief/StrX'
 
 const { hasChn, toFullAngle } = StrX
 /**

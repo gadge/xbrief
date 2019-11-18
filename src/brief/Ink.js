@@ -29,6 +29,10 @@ export class Ink {
     return this.toString()
   }
 
+  get say () {
+    return this.toString()
+  }
+
   increaseIndent (block = '  ') {
     this.blocks.push(block)
     return this
