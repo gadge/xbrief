@@ -4,19 +4,19 @@ import { brace, bracket } from '../utils/palette'
 import { deAr } from './deAr'
 import { deEnts } from './deEnts'
 
-export const deOb = (node, l = 0, hi = 8) => {
-  let r = rn + tb.repeat(l)
+export const deOb = (node, lv = 0, hi = 8, vu = 1) => {
+  let lf = rn + tb.repeat(lv)
   switch (initial(node)) {
     case 'Arr':
-      return l >= hi ? '[array]' : deAr(node, l, r, hi) |> bracket
+      return lv >= hi ? '[array]' : deAr(node, lv, lf, hi, vu) |> bracket
     case 'Obj' :
-      return l >= hi ? '{object}' : deEnts(Object.entries(node), l, r, hi) |> brace
+      return lv >= hi ? '{object}' : deEnts(Object.entries(node), lv, lf, hi, vu) |> brace
     case 'Map':
-      return l >= hi ? '(map)' : deEnts([...node.entries()], l, r, hi)|> bracket
+      return lv >= hi ? '(map)' : deEnts([...node.entries()], lv, lf, hi, vu)|> bracket
     // case 'Fun' :
     //   return deFn(node)
     case 'Set':
-      return l >= hi ? '(set)' : `set:[${deAr([...node], l, r, hi)}]`
+      return lv >= hi ? '(set)' : `set:[${deAr([...node], lv, lf, hi, vu)}]`
     default:
       return `${node}`
   }

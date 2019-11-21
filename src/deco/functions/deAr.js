@@ -3,15 +3,16 @@ import { Visual } from 'spettro'
 import { deNode } from '../deco'
 import { tb } from '../../utils/str'
 
-export let deAr = (arr, l, rn, hi) => {
+export let deAr = (arr, lv, rn, hi, vu) => {
   let len = 0, wrap = false, word
-  l++
+  lv++
   const points = arr.map(node => {
-    word = deNode(node, l, hi).toString()
+    word = deNode(node, lv, hi, vu).toString()
     if (!wrap && (len += stringLength(word)) > 64) wrap = true
     return word
-  })|> Visual.vector
+  }) |> Visual.vector
   return wrap
     ? `${rn}  ${points.join(`,${rn + tb}`)}${rn}`
     : points.join(',')
 }
+

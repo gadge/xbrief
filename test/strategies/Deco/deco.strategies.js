@@ -33,7 +33,7 @@ export class DecoStrategies {
     const funcList = {
       classic: decoClassic,
       stable: decoStable,
-      dev: o => deco(o, 8),
+      dev: o => deco(o, 8, 1),
     }
     const { lapse, result } = Chrono.strategies({
       repeat: 2E+3,

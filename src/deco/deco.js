@@ -6,10 +6,11 @@ import { deFn } from './functions/deFn'
 /**
  *
  * @param {any} obj
- * @param {number} hi - level of object to show
+ * @param {number} [hi] - level of object to show
+ * @param {number} [vu] - vertical under
  * @returns {string|number}
  */
-export const deco = (obj, hi) => deNode(obj, 0, hi)
+export const deco = (obj, hi, vu) => deNode(obj, 0, hi, vu)
 
 const { str } = Pal
 
@@ -18,14 +19,15 @@ const { str } = Pal
  * @param {*} node
  * @param {number} [l]
  * @param {number} hi
+ * @param {number} vu
  * @return {string|number}
  */
-export function deNode (node, l = 0, hi = 8) {
+export function deNode (node, l = 0, hi = undefined, vu = 0) {
   switch ((typeof node).slice(0, 3)) {
     case 'str':
       return isNumeric(node) ? node : `${str(node)}`
     case 'obj':
-      return deOb(node, l, hi)
+      return deOb(node, l, hi, vu)
     case 'num':
     case 'big':
       return node

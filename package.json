@@ -20,11 +20,11 @@
     "mocha": "mocha -r @babel/register"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "has-ansi": "^4.0.0",
     "ansi-regex": "^5.0.0",
     "string-length": "^3.1.0",
-    "spettro": "^0.0.17",
+    "spettro": "^0.0.18",
     "typen": "^0.0.3",
     "borel": "^0.1.11",
     "veho": "^0.1.54"
