@@ -5,12 +5,12 @@ import { deFn } from './functions/deFn'
 
 /**
  *
- * @param {any} obj
+ * @param {*} obj
  * @param {number} [hi] - level of object to show
  * @param {number} [vu] - vertical under
  * @returns {string|number}
  */
-export const deco = (obj, hi, vu) => deNode(obj, 0, hi, vu)
+export const deco = (obj, { hi, vu }) => deNode(obj, 0, hi, vu)
 
 const { str } = Pal
 
