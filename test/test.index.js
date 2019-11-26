@@ -1,10 +1,10 @@
-// import { DecoTest } from './tasks/brief.test/deco.test'
+import { DecoTest } from './tasks/brief.test/deco.test'
+
+DecoTest.decoTest()
+
+// import { DecoStrategies } from './strategies/Deco/deco.strategies'
 //
-// DecoTest.decoTest()
-
-import { DecoStrategies } from './strategies/Deco/deco.strategies'
-
-DecoStrategies.test()
+// DecoStrategies.test()
 
 // import { RegexTest } from './brief.test/regex.test'
 //

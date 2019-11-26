@@ -1,7 +1,4 @@
-import { rn, aeu } from '../utils/str'
-import { Preci } from '../utils/Preci/Preci'
 import { EntX } from './EntX'
-import { ArrX } from './ArrX'
 import { greys, palette } from 'spettro'
 
 class MapX {

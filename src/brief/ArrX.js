@@ -1,6 +1,5 @@
-import { rn, aeu, lpad, rpad, totx } from '../utils/str'
+import { rn, aeu, rpad} from '../utils/str'
 import { Preci } from '../utils/Preci/Preci'
-import stringLength from 'string-length'
 import { Visual, palette, greys } from 'spettro'
 import { isVisual } from '../utils/isVisual'
 

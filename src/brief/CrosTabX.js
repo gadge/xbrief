@@ -1,12 +1,12 @@
-import { Preci } from '../utils/Preci/Preci'
-import { aeu, lpad, rn, rpad, totx, zhChars } from '../utils/str'
 import { greys, palette } from 'spettro'
 import { Ar, Mx } from 'veho'
-import { isVisual } from '../utils/isVisual'
-import { destructPreX } from '../utils/Preci/functions/destructPreX'
-import { readCrop } from '../utils/readCrop'
-import { padTable } from '../utils/Preci/functions/padTable'
+import { aeu, lpad, rn, rpad, zhChars } from '../utils/str'
 import { mapAr, maxLen } from '../utils/arr'
+import { Preci } from '../utils/Preci/Preci'
+import { padTable } from '../utils/Preci/functions/padTable'
+import { destructPreX } from '../utils/Preci/functions/destructPreX'
+import { isVisual } from '../utils/isVisual'
+import { readCrop } from '../utils/readCrop'
 import { StrX } from './StrX'
 
 const { hasChn, toFullAngle } = StrX

@@ -1,11 +1,9 @@
 import { Preci } from '../utils/Preci/Preci'
-import { totx, aeu, rn, rpad, lpad, numPad } from '../utils/str'
+import { totx, aeu, rn, lpad, numPad } from '../utils/str'
 import { greys, palette, Visual } from 'spettro'
 import stringLength from 'string-length'
-import { NumLoose } from 'typen'
 import { isVisual } from '../utils/isVisual'
 
-const { isNumeric } = NumLoose
 
 class EntX {
   /***

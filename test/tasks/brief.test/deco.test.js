@@ -49,6 +49,8 @@ class DecoTest {
       // class_ins2: new Player('Messi', '001'),
       // class2: Player
     }
+
+    JSON.stringify(objects|> deco) |> console.log
     objects |> deco |> console.log
     // for (let [k, v] of Object.entries(objects)) {
     //   // v |> Typ.check |> console.log
